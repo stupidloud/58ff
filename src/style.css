@@ -1,0 +1,115 @@
+@import "tailwindcss";
+:root {
+  font-family: "Prompt", "Roboto", -apple-system, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  background-color: var(--color-bg-aside);
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+
+  /* 颜色变量部分 */
+  --color-bg-aside: #372380;  /* 大背景色 */  
+  --color-main-bg: #281c5e;  /* 主要背景色 */
+  --color-tabbar: #372380;  /* 标签栏背景色 */
+  --color-active: #D64258;  /* 活动项背景色(按钮) */
+  --color-highlight: #f5c84c;  /* 高亮文字颜色 */
+
+  /* 一般情况下不用改，只有样式冲突才要 */
+  --color-warning: #fc974c;
+
+  /* 根据每期主题色变深或变浅，请不要手动更改 */
+  --color-border-1: color-mix(in srgb, var(--color-bg-aside), white 20%);
+  --color-active-2: color-mix(in srgb, var(--color-active), black 30%);
+
+}
+
+
+a {
+  font-weight: 500;
+  color: #646cff;
+  text-decoration: inherit;
+}
+a:hover {
+  color: #535bf2;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  place-items: center;
+  /* 允许宽度低于 320px，避免缩放导致的高度异常 */
+  min-width: 0;
+  /* 回退：在不支持 dvh/svh 的浏览器使用 100vh */
+  min-height: 100vh;
+  
+  flex-direction: column;
+}
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+
+button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #1a1a1a;
+  cursor: pointer;
+  transition: border-color 0.25s;
+}
+button:hover {
+  border-color: #646cff;
+}
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+#app {
+  max-width: 486px;
+  margin: 0 auto;  
+  text-align: center;
+  width: 100%;
+  height: auto;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.fullPage {
+  width: 100%;
+  height: 100%;
+  flex: 1;
+}
+
+
+
+@supports (min-height: 100svh) {
+  body { min-height: 100svh; }
+}
+@supports (min-height: 100dvh) {
+  body { min-height: 100dvh; }
+}
+
+
+html {
+  /* 当视口宽度 <= 486px 时按比例缩放；>486px 时不再增大 */
+  font-size: min(calc(100vw / 486 * 20), 20px);
+}
+@supports (width: 1dvw) {
+  html {    
+    font-size: min(calc(100dvw / 486 * 20), 20px);
+  }
+}
+
+
