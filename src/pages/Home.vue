@@ -404,7 +404,7 @@
 
 
   <!-- 两侧广告 -->
-   <div class="fixed right-[calc(50%-11rem-1rem)] bottom-[9.25rem] animate-wobble-loop">
+   <div @click="showOpenTime();" class="fixed right-[calc(50%-11rem-1rem)] bottom-[9.25rem] animate-wobble-loop">
     <img class="w-auto h-[6.25rem]" src="/static/sidegift.gif" alt="">
     <p class="text-white font-[700] text-[.75rem] -mt-[2rem]">00:05:33</p>
    </div>
@@ -545,8 +545,7 @@ onMounted(() => {
 
   
   // 不再在挂载时直接调用 Pop 或 GiftAlert，避免同时展示
-
-  showOpenTime();
+  
 });
 </script>
 
