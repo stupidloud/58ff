@@ -294,7 +294,8 @@
     </div>
 
     <div
-      class="text-white flex items-center justify-center w-[3.375rem] h-[3.375rem] left-[calc(50%-11rem)] bottom-[6.3rem] fixed rounded-[100px] bg-[var(--color-active)] animate-support-float">
+      @click="goToNotification"
+      class="text-white flex items-center justify-center w-[3.375rem] h-[3.375rem] left-[calc(50%-11rem)] bottom-[6.3rem] fixed rounded-[100px] bg-[var(--color-active)] animate-support-float cursor-pointer">
       <svg class="w-[80%] animate-icon-bounce" viewBox="0 0 30 28" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path fill-rule="evenodd" clip-rule="evenodd"
           d="M26.4105 13.2427C26.3865 13.2427 26.367 13.2232 26.367 13.1991C26.367 6.96471 21.313 1.91072 15.0786 1.91072C8.84419 1.91072 3.7902 6.96471 3.7902 13.1991C3.7902 13.2232 3.77075 13.2427 3.7467 13.2427H2.53578C2.51169 13.2427 2.49213 13.2232 2.49213 13.1991C2.49213 6.2478 8.12729 0.61264 15.0786 0.61264C22.0299 0.61264 27.6651 6.2478 27.6651 13.1991C27.6651 13.2232 27.6455 13.2427 27.6214 13.2427H26.4105Z"
@@ -325,11 +326,14 @@ import "swiper/css";
 
 import { Autoplay } from "swiper/modules";
 import { ref, onMounted } from "vue";
+import { useRouter } from "vue-router";
 import { showGiftAlert } from "../components/giftAlert/service";
 import { showPop, hidePop } from "../components/pop/service";
 import { showInstall, hideInstall } from "../components/install/service";
 import { showOpenTime } from "../components/openTime/service";
 import Tabbar from "../components/tabbar/Tabbar.vue";
+
+const router = useRouter();
 
 const images = [
   "/variable/banner1.png",
@@ -445,6 +449,11 @@ const runSequence = () => {
   const step3 = () => {
     loadAlert();
   };
+};
+
+// 跳转到通知页面
+const goToNotification = () => {
+  router.push('/notification');
 };
 
 onMounted(() => {
