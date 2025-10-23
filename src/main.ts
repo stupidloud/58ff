@@ -11,7 +11,7 @@ const app = createApp(App)
 app.use(router)
 app.mount('#app')
 
-// 在 body 上挂载 GiftAlert、Pop、Install 全局组件（初始不可见）
+// 在 body 上挂载 GiftAlert、Pop、Install、OpenTime 全局组件（初始不可见）
 mountGiftAlert()
 mountPop()
 mountInstall()
