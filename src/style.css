@@ -20,10 +20,14 @@
 
   /* 一般情况下不用改，只有样式冲突才要 */
   --color-warning: #fc974c;
+  --color-text-link: #57A6FF;  /* 链接文字颜色 */
 
   /* 根据每期主题色变深或变浅，请不要手动更改 */
   --color-border-1: color-mix(in srgb, var(--color-bg-aside), white 20%);
+  --color-border-2: color-mix(in srgb, var(--color-bg-aside), white 10%);
   --color-active-2: color-mix(in srgb, var(--color-active), black 30%);
+  --color-bg-aside-2: color-mix(in srgb, var(--color-bg-aside), black 10%);
+  --color-tabbar-2: color-mix(in srgb, var(--color-tabbar), black 20%);
 
 }
 
@@ -83,8 +87,10 @@ button:focus-visible {
   width: 100%;
   height: auto;
   flex: 1;
+  position: relative;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 }
 .fullPage {
   width: 100%;

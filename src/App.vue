@@ -1,20 +1,7 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue'
-import { useRoute } from 'vue-router'
+import { ref } from 'vue'
 
-const route = useRoute()
 const transitionName = ref('route-forward')
-let prevIndex = Number(route.meta?.index ?? 0)
-
-watch(() => route.fullPath, () => {
-  const currentIndex = Number(route.meta?.index ?? 0)
-  if (currentIndex > prevIndex) {
-    transitionName.value = 'route-forward'
-  } else {
-    transitionName.value = 'route-back'
-  }
-  prevIndex = currentIndex
-})
 </script>
 
 <template>

@@ -47,7 +47,7 @@
       </div>
       <!-- header -->
       <div class="flex h-[3.125rem] items-center px-[.75rem] bg-[var(--color-tabbar)]">
-        <div class="text-white text-[1rem]">
+        <div class="text-white text-[1rem] cursor-pointer" @click="isSidebarOpen = true">
           <svg width="1rem" height="1rem" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"
             class="transform scale-x-[-1]">
             <g>
@@ -60,11 +60,11 @@
         <img class="w-[7.5rem] h-auto ml-[1rem]" src="/variable/logo.png" alt="" />
         <div class="ml-auto flex items-center justify-between gap-[.5rem]">
           <div
-            class="opacity-90 hover:opacity-100 transition-opacity w-[4.69rem] h-[2.15rem] rounded-[.375rem] font-[700] text-[.875rem] cursor-pointer bg-[linear-gradient(90deg,rgb(55,35,128)_-27.5%,rgb(110,95,162)_127.5%)] text-[var(--color-highlight)] flex items-center justify-center">
+            class="hover:brightness-120 transition-all duration-50 w-[4.69rem] h-[2.15rem] rounded-[.375rem] font-[700] text-[.875rem] cursor-pointer bg-[linear-gradient(90deg,rgb(55,35,128)_-27.5%,rgb(110,95,162)_127.5%)] text-[var(--color-highlight)] flex items-center justify-center">
             Entrar
           </div>
           <div
-            class="opacity-90 hover:opacity-100 transition-opacity w-[4.69rem] h-[2.15rem] rounded-[.375rem] font-[700] text-[.875rem] cursor-pointer bg-[linear-gradient(90deg,rgb(214,66,88)_-27.5%,rgb(214,66,88)_127.5%)] text-white flex items-center justify-center">
+            class="hover:brightness-120 transition-all duration-50 w-[4.69rem] h-[2.15rem] rounded-[.375rem] font-[700] text-[.875rem] cursor-pointer bg-[linear-gradient(90deg,rgb(214,66,88)_-27.5%,rgb(214,66,88)_127.5%)] text-white flex items-center justify-center">
             Registro
           </div>
         </div>
@@ -316,6 +316,7 @@
 
     
     <!-- Tabbar 组件 -->
+    <SideBar v-model:open="isSidebarOpen" />
     <Tabbar />
   </div>
 </template>
@@ -331,9 +332,12 @@ import { showGiftAlert } from "../components/giftAlert/service";
 import { showPop, hidePop } from "../components/pop/service";
 import { showInstall, hideInstall } from "../components/install/service";
 import { showOpenTime } from "../components/openTime/service";
-import Tabbar from "../components/tabbar/Tabbar.vue";
+import SideBar from "../components/SideBar.vue";
+
 
 const router = useRouter();
+
+const isSidebarOpen = ref(false);
 
 const images = [
   "/variable/banner1.png",

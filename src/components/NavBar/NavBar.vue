@@ -2,16 +2,18 @@
   <div 
     class="sticky top-0 left-0 right-0 z-50 max-w-[486px] mx-auto"
   >
-    <div class="h-[3.5rem] bg-[var(--color-tabbar)] flex items-center justify-center relative">
+    <div class="h-[3.2rem] bg-[var(--color-tabbar)] flex items-center justify-center relative">
       <!-- 返回按钮 -->
-     <div @click="goBack" class="hover:bg-white/10 rounded-[1rem] flex items-center justify-center px-[.85rem] py-[.25rem] cursor-pointer absolute left-[1rem]">
+     <div @click="goBack" class="hover:bg-white/10 rounded-[1rem] flex items-center justify-center px-[.65rem] py-[.25rem] cursor-pointer absolute left-[.5rem]">
       <ion-icon class="text-white text-[1.2rem]" name="chevron-back-outline"></ion-icon>
      </div>
       
-      <p class="text-white text-[1rem] font-[600]">{{ title }}</p>
+      <p class="text-white text-[1.1rem] font-[600] max-w-[15rem] min-w-0 truncate">{{ title }}</p>
       
-      <!-- 右侧占位 -->
-      <div class="w-8 h-8"></div>
+      <div class="absolute right-[.4rem] flex items-center">
+        <slot name="right"></slot>
+      </div>
+      
     </div>
   </div>
 </template>

@@ -14,7 +14,7 @@
         :class="{ 'text-white font-[700]': activeTab === tab.key, 'text-white/40': activeTab !== tab.key }"
         @click="setActiveTab(tab.key)">
 
-        <div class="h-full flex flex-col items-center justify-center flex-wrap" v-if="tab.key != 'convidar'">
+        <div class="h-full flex flex-col items-center justify-center flex-wrap" v-if="tab.key != 'convidar'" :class="{ 'tab-bounce': activeTab === tab.key }">
           <img class="w-[1.5rem] h-auto" :src="'/static/' + tab.icon" alt="">
           <p class="w-full text-[.625rem]">{{ tab.label }}</p>
         </div>
@@ -23,9 +23,10 @@
     </div>
     <div class="absolute top-[0] left-1/2 -translate-x-1/2 h-[3.5rem]">
       <div
+        @click="setActiveTab('convidar')"
         class="relative translate-y-[-1.8rem] w-[3.125rem] h-[3.125rem] border-[.1rem] border-[var(--color-active)] bg-[var(--color-bg-aside)] rounded-[50%] flex items-center justify-center">
         <img class="tabbarlight absolute top-0 right-0 w-[3.125rem] h-[3.125rem]" src="/static/tabbar3_light.png" alt="">
-        <img class="absolute mx-auto w-[2.1875rem] h-auto" src="/static/tabbar3.png" alt=""></img>
+        <img class="absolute mx-auto w-[2.1875rem] h-auto" :class="{ 'tab-bounce': activeTab === 'convidar' }" src="/static/tabbar3.png" alt=""></img>
       </div>
       <p :class="{ 'text-white font-[700]': activeTab === 'convidar', 'text-white/40': activeTab !== 'convidar' }" class="translate-y-[-1.11rem] text-[.625rem] w-full">Convidar</p>
     </div>
@@ -72,7 +73,7 @@ const tabs = ref([
 const activeTab = computed(() => {
   const path = route.path
   if (path === '/' || path === '/home') return 'inicio'
-  if (path.includes('promocao')) return 'promocao'
+  if (path.includes('promo')) return 'promocao'
   if (path.includes('convidar')) return 'convidar'
   if (path.includes('deposito')) return 'deposito'
   if (path.includes('perfil')) return 'perfil'
@@ -88,11 +89,11 @@ const setActiveTab = (tab: string) => {
       router.push('/')
       break
     case 'promocao':
-      // router.push('/promocao')
+      router.push('/promo')
       console.log('Promoção tab clicked - route not implemented yet')
       break
     case 'convidar':
-      console.log('Convidar tab clicked - invite functionality')
+      router.push('/invite')
       break
     case 'deposito':
       // router.push('/deposito')
@@ -122,5 +123,17 @@ const setActiveTab = (tab: string) => {
   100% { 
     transform: rotate(360deg); 
   }
+}
+/* 激活项缩放弹动动画 */
+@keyframes tab-bounce-scale {
+  0% { transform: scale(1); }
+  30% { transform: scale(1.2); }
+  50% { transform: scale(0.6); }
+  70% { transform: scale(1.08); }
+  100% { transform: scale(1); }
+}
+.tab-bounce {
+  animation: tab-bounce-scale 380ms ease-out;
+  will-change: transform;
 }
 </style>
