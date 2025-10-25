@@ -89,8 +89,7 @@ button:focus-visible {
   flex: 1;
   position: relative;
   display: flex;
-  flex-direction: column;
-  overflow: hidden;
+  flex-direction: column;  
 }
 .fullPage {
   width: 100%;

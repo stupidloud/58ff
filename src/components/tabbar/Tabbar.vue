@@ -36,9 +36,13 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import { useAuthStore } from '../../stores/auth'
+import { useUiStore } from '../../stores/ui'
 
 const route = useRoute()
 const router = useRouter()
+const auth = useAuthStore()
+const ui = useUiStore()
 
 // tab配置数据
 const tabs = ref([
@@ -96,12 +100,21 @@ const setActiveTab = (tab: string) => {
       router.push('/invite')
       break
     case 'deposito':
+      console.log('[auth] isLoggedIn:', auth.isLoggedIn, 'token:', auth.token)
+      if (!auth.isLoggedIn) {
+        ui.openLogin('login')
+        break
+      }
       // router.push('/deposito')
       console.log('Depósito tab clicked - route not implemented yet')
       break
     case 'perfil':
-      // router.push('/perfil')
-      console.log('Perfil tab clicked - route not implemented yet')
+      console.log('[auth] isLoggedIn:', auth.isLoggedIn, 'token:', auth.token)
+      if (!auth.isLoggedIn) {
+        ui.openLogin('login')
+        break
+      }
+      router.push('/perfil')      
       break
   }
 }

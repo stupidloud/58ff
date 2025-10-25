@@ -60,11 +60,13 @@
         <img class="w-[7.5rem] h-auto ml-[1rem]" src="/variable/logo.png" alt="" />
         <div class="ml-auto flex items-center justify-between gap-[.5rem]">
           <div
-            class="hover:brightness-120 transition-all duration-50 w-[4.69rem] h-[2.15rem] rounded-[.375rem] font-[700] text-[.875rem] cursor-pointer bg-[linear-gradient(90deg,rgb(55,35,128)_-27.5%,rgb(110,95,162)_127.5%)] text-[var(--color-highlight)] flex items-center justify-center">
+            class="hover:brightness-120 transition-all duration-50 w-[4.69rem] h-[2.15rem] rounded-[.375rem] font-[700] text-[.875rem] cursor-pointer bg-[linear-gradient(90deg,rgb(55,35,128)_-27.5%,rgb(110,95,162)_127.5%)] text-[var(--color-highlight)] flex items-center justify-center"
+            @click="loginDefaultMode = 'login'; isLoginOpen = true">
             Entrar
           </div>
           <div
-            class="hover:brightness-120 transition-all duration-50 w-[4.69rem] h-[2.15rem] rounded-[.375rem] font-[700] text-[.875rem] cursor-pointer bg-[linear-gradient(90deg,rgb(214,66,88)_-27.5%,rgb(214,66,88)_127.5%)] text-white flex items-center justify-center">
+            class="hover:brightness-120 transition-all duration-50 w-[4.69rem] h-[2.15rem] rounded-[.375rem] font-[700] text-[.875rem] cursor-pointer bg-[linear-gradient(90deg,rgb(214,66,88)_-27.5%,rgb(214,66,88)_127.5%)] text-white flex items-center justify-center"
+            @click="loginDefaultMode = 'register'; isLoginOpen = true">
             Registro
           </div>
         </div>
@@ -317,6 +319,7 @@
     
     <!-- Tabbar 组件 -->
     <SideBar v-model:open="isSidebarOpen" />
+    <Login v-model:open="isLoginOpen" :initialMode="loginDefaultMode" />
     <Tabbar />
   </div>
 </template>
@@ -333,11 +336,14 @@ import { showPop, hidePop } from "../components/pop/service";
 import { showInstall, hideInstall } from "../components/install/service";
 import { showOpenTime } from "../components/openTime/service";
 import SideBar from "../components/SideBar.vue";
+import Login from "./login/Login.vue";
 
 
 const router = useRouter();
 
 const isSidebarOpen = ref(false);
+const isLoginOpen = ref(false);
+const loginDefaultMode = ref<'login' | 'register'>('login');
 
 const images = [
   "/variable/banner1.png",
