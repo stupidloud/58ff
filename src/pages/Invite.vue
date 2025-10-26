@@ -144,6 +144,7 @@ const copyAppUrl = async () => {
 +   window.showToast?.('Cópia Bem-sucedida')
     console.log('Copied to clipboard:', text)
   } catch (err) {
+    window.showToast?.('Cópia Falhou')
     console.error('Copy failed:', err)
   }
 }
