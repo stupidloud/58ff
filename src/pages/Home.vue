@@ -58,7 +58,7 @@
           </svg>
         </div>
         <img class="w-[7.5rem] h-auto ml-[1rem]" src="/variable/logo.png" alt="" />
-        <div class="ml-auto flex items-center justify-between gap-[.5rem]">
+        <div v-if="!auth.isLoggedIn" class="ml-auto flex items-center justify-between gap-[.5rem]">
           <div
             class="hover:brightness-120 transition-all duration-50 w-[4.69rem] h-[2.15rem] rounded-[.375rem] font-[700] text-[.875rem] cursor-pointer bg-[linear-gradient(90deg,rgb(55,35,128)_-27.5%,rgb(110,95,162)_127.5%)] text-[var(--color-highlight)] flex items-center justify-center"
             @click="loginDefaultMode = 'login'; isLoginOpen = true">
@@ -68,6 +68,15 @@
             class="hover:brightness-120 transition-all duration-50 w-[4.69rem] h-[2.15rem] rounded-[.375rem] font-[700] text-[.875rem] cursor-pointer bg-[linear-gradient(90deg,rgb(214,66,88)_-27.5%,rgb(214,66,88)_127.5%)] text-white flex items-center justify-center"
             @click="loginDefaultMode = 'register'; isLoginOpen = true">
             Registro
+          </div>
+        </div>
+        <div 
+        class="flex items-center flex-1 justify-end"
+        v-else>
+          <img class="w-[1.25rem] h-auto mr-[.3215rem]" src="/static/withdraw.png" alt="">
+          <p class="text-shadow-[var(--currency-shadow,0_0_.625rem_var(--color-active))] text-white mr-[.25rem] text-[.75rem] font-[700]">R$0,30</p>
+          <div class="ml-[0.375rem] rounded-[0.375rem] border-[0.0625rem] border-[var(--color-highlight)] px-[0.5rem] py-[0.375rem] shadow-[inset_0_0_0.5563rem_0_var(--color-highlight)] cursor-pointer">
+            <div class="w-[1rem] h-[1rem] bg-[var(--color-highlight)] bg-no-repeat bg-contain mask-[url('/static/pig.svg')] mask-center animate-pig-elastic-bounce will-change-transform"></div>
           </div>
         </div>
       </div>
@@ -337,9 +346,11 @@ import { showInstall, hideInstall } from "../components/install/service";
 import { showOpenTime } from "../components/openTime/service";
 import SideBar from "../components/SideBar.vue";
 import Login from "./login/Login.vue";
+import { useAuthStore } from "../stores/auth";
 
 
 const router = useRouter();
+const auth = useAuthStore();
 
 const isSidebarOpen = ref(false);
 const isLoginOpen = ref(false);
@@ -490,6 +501,20 @@ onMounted(() => {
   }
 }
 
+/* 向上跳动并带回弹，末尾留空隙作为暂停 */
+@keyframes bounce-up-loop {
+  0% { transform: translateY(0); }
+  25% { transform: translateY(-12px); }  /* 向上跳 */
+  40% { transform: translateY(0); }      /* 落地 */
+  55% { transform: translateY(-4px); }   /* 轻微回弹 */
+  65% { transform: translateY(0); }      /* 回到基线 */
+  100% { transform: translateY(0); }     /* 暂停等待下一轮 */
+}
+
+.animate-bounce-up-loop {
+  animation: bounce-up-loop 2.2s ease-in-out infinite;
+}
+
 .animate-float-1 {
   animation: float-up-down 3s ease-in-out infinite;
 }
@@ -606,6 +631,30 @@ onMounted(() => {
 
 .animate-icon-bounce {
   animation: iconBounce-ad181b16 2s ease-in-out infinite;
+  will-change: transform;
+}
+
+/* 猪图标弹性跳跃动画（按用户提供的关键帧与时长） */
+@keyframes pigElasticBounce-26a1dde3 {
+  0%, 100% { 
+    transform: translateY(0) scaleY(1); 
+  }
+  5% { 
+    transform: translateY(-.5rem) scaleY(1.1); 
+  }
+  8% { 
+    transform: translateY(-.1875rem) scaleY(.9); 
+  }
+  12% { 
+    transform: translateY(-.375rem) scaleY(1.05); 
+  }
+  17% { 
+    transform: translateY(0) scaleY(1); 
+  }
+}
+
+.animate-pig-elastic-bounce {
+  animation: pigElasticBounce-26a1dde3 6s infinite;
   will-change: transform;
 }
 </style>

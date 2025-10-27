@@ -12,7 +12,7 @@
                         </div>
                         <img class="h-[1.75rem] w-auto" src="/variable/logo.png" alt="">
                     </div>
-                    <div class="flex items-center justify-between gap-[.5rem] py-[1.0625rem]">
+                    <div v-if="!auth.isLoggedIn" class="flex items-center justify-between gap-[.5rem] py-[1.0625rem]">
                         <div
                             class="hover:brightness-120 transition-all duration-50 flex-1 h-[2.6rem] font-[700] text-[.875rem] cursor-pointer bg-[linear-gradient(90deg,rgb(55,35,128)_-27.5%,rgb(110,95,162)_127.5%)] text-[var(--color-highlight)] flex items-center justify-center">
                             Entrar
@@ -20,6 +20,18 @@
                         <div
                             class="hover:brightness-120 transition-all duration-50 flex-1 h-[2.6rem] font-[700] text-[.875rem] cursor-pointer bg-[linear-gradient(90deg,rgb(214,66,88)_-27.5%,rgb(214,66,88)_127.5%)] text-white flex items-center justify-center">
                             Registro
+                        </div>
+                    </div>
+                    <div 
+                    v-else
+                    class="flex items-center py-[1.0625rem]">
+                        <img class="w-[2.375rem] h-[2.375rem] mx-[.25rem]" src="/static/withdraw.png" alt="">
+                        <div class="mr-[.25rem]">
+                            <p class="text-shadow-[var(--currency-shadow,0_0_.625rem_var(--color-active))] text-white  text-[.875rem] font-[700] skew-x-[-10deg]">R$0,30</p>
+                            <p class="text-[var(--color-active)] text-[.625rem] font-[400] text-left">Saldo</p>
+                        </div>
+                        <div class="ml-auto h-[2rem] w-[5rem] rounded-[.375rem] relative text-[var(--color-highlight)] bg-[var(--color-bg-aside-2)] flex items-center justify-center  shadow-[inset_0_-0.0625rem_0_0_var(--color-highlight)] text-[.75rem] font-[600] cursor-pointer hover:brightness-110 transition-all duration-50">
+                            Depósito
                         </div>
                     </div>
                 </div>
@@ -90,8 +102,11 @@
 
 <script setup lang="ts">
 import { watch, onUnmounted, ref } from 'vue';
+import { useAuthStore } from '../stores/auth';
 const props = defineProps<{ open: boolean }>();
 const emit = defineEmits<{ (e: 'update:open', v: boolean): void }>();
+
+const auth = useAuthStore();
 
 const providerOpen = ref(false);
 
