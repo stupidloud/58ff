@@ -1,11 +1,12 @@
 <template>
     <div class="min-h-screen bg-[var(--color-main-bg)]">
-        <div class=" pb-0 flex bg-[var(--color-tabbar)] overflow-x-auto flex-nowrap no-scrollbar">
+        <div ref="navContainer" class=" pb-0 flex bg-[var(--color-tabbar)] overflow-x-auto flex-nowrap no-scrollbar sticky top-0 z-[20]">
             <div
                 v-for="item in nav"
                 :key="item.id"
+                ref="navItems"
                 :class="{'border-b-[.1rem] border-[var(--color-active)] font-[700] !text-[var(--color-active)]': item.id === activeTab}"
-                class="text-white/40 h-[3.1rem] text-[.7rem] flex items-center px-[.625rem] whitespace-nowrap flex-shrink-0 cursor-pointer select-none relative tab-item"
+                class="text-white/40 h-[3.1rem] text-[.65rem] flex items-center px-[.625rem] whitespace-nowrap flex-shrink-0 cursor-pointer select-none relative tab-item"
                 @click="setActive(item.id)">
                 <span class="relative z-10">{{ item.label }}</span>
             </div>
@@ -18,11 +19,40 @@
  </template>
  <script setup lang="ts">
 import {ref, computed, defineAsyncComponent} from 'vue'
- const activeTab = ref(1)
- 
- const setActive = (id: number) => {
-   activeTab.value = id
- }
+import Tabbar from '../components/tabbar/Tabbar.vue'
+
+const activeTab = ref(1)
+const navContainer = ref<HTMLElement>()
+const navItems = ref<HTMLElement[]>([])
+
+const setActive = (id: number) => {
+  activeTab.value = id
+  scrollToActiveItem(id)
+}
+
+// 滚动到激活的导航项
+const scrollToActiveItem = (activeId: number) => {
+  if (!navContainer.value || !navItems.value) return
+  
+  const activeIndex = nav.value.findIndex(item => item.id === activeId)
+  if (activeIndex === -1) return
+  
+  const activeItem = navItems.value[activeIndex]
+  if (!activeItem) return
+  
+  const container = navContainer.value
+  const containerWidth = container.clientWidth
+  const itemLeft = activeItem.offsetLeft
+  const itemWidth = activeItem.offsetWidth
+  
+  // 计算滚动位置，让激活项居中显示
+  const scrollLeft = itemLeft - (containerWidth - itemWidth) / 2
+  
+  container.scrollTo({
+    left: Math.max(0, scrollLeft),
+    behavior: 'smooth'
+  })
+}
 
 const viewsMap: Record<number, any> = {
   1: defineAsyncComponent(() => import('./promo/eventos.vue')),

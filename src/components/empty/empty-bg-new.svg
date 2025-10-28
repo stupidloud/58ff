@@ -1,0 +1,14 @@
+<svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <g>
+    <!-- 空状态图标 - 文件夹或盒子 -->
+    <path d="M20 35C20 31.6863 22.6863 29 26 29H45L50 35H94C97.3137 35 100 37.6863 100 41V85C100 88.3137 97.3137 91 94 91H26C22.6863 91 20 88.3137 20 85V35Z" fill="currentColor"/>
+    
+    <!-- 内部装饰线条 -->
+    <path d="M30 50H90M30 60H75M30 70H85" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity="0.3"/>
+    
+    <!-- 空状态装饰点 -->
+    <circle cx="60" cy="60" r="3" fill="currentColor" opacity="0.5"/>
+    <circle cx="45" cy="75" r="2" fill="currentColor" opacity="0.3"/>
+    <circle cx="75" cy="45" r="2" fill="currentColor" opacity="0.3"/>
+  </g>
+</svg>

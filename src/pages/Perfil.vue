@@ -75,7 +75,7 @@
                 <div class="flex items-center relative h-[1.5rem]">
                     <img class="w-[2.375rem] h-[2.375rem] relative z-2" src="/static/profile/vip1.png" alt="">
                     <div class="ml-[-1.25rem] bg-[url('/static/profile/vipTextSvg1.svg')] bg-no-repeat bg-center bg-[length:100%_100%] w-[4.5rem] h-[1.25rem] text-[.75rem] font-[600] text-white flex items-center justify-center indent-[.7em]">
-                        VIP 1
+                        VIP 0
                     </div>
                 </div>         
                 <p class="ml-[.75rem] text-white/40 text-[.75rem] font-[600]">Nível Atual</p>

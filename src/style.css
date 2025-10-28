@@ -16,10 +16,10 @@
   --color-main-bg: #281c5e;  /* 主要背景色 */
   --color-tabbar: #322071;  /* 标签栏背景色 */
   --color-active: #D64258;  /* 活动项背景色(按钮) */
-  --color-highlight: #f5c84c;  /* 高亮文字颜色 */
 
   /* 一般情况下不用改，只有样式冲突才要 */
   --color-warning: #fc974c;
+  --color-highlight: #f5c84c;  /* 高亮文字颜色 */
   --color-text-link: #57A6FF;  /* 链接文字颜色 */
 
   /* 根据每期主题色变深或变浅，请不要手动更改 */
@@ -27,10 +27,19 @@
   --color-border-2: color-mix(in srgb, var(--color-bg-aside), white 10%);
   --color-active-2: color-mix(in srgb, var(--color-active), black 30%);
   --color-bg-aside-2: color-mix(in srgb, var(--color-bg-aside), black 10%);
-  --color-tabbar-2: color-mix(in srgb, var(--color-tabbar), black 20%);
+  --color-tabbar-2: color-mix(in srgb, var(--color-tabbar), black 20%);  
+  
 
 }
 
+/* 隐藏滚动条样式 */
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;  /* Chrome, Safari and Opera */
+}
 
 a {
   font-weight: 500;

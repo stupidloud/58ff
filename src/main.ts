@@ -9,6 +9,7 @@ import { mountOpenTime } from './components/openTime/service'
 import { mountToast } from './components/toast/service'
 import NavBar from './components/NavBar/NavBar.vue'
 import Tabbar from './components/tabbar/Tabbar.vue'
+import Empty from './components/empty/Empty.vue'
 import { createPinia } from 'pinia'
 
 const app = createApp(App)
@@ -19,6 +20,8 @@ app.use(pinia)
 app.component('NavBar', NavBar)
 // 注册 Tabbar 为全局组件
 app.component('Tabbar', Tabbar)
+// 注册 Empty 为全局组件
+app.component('Empty', Empty)
 app.mount('#app')
 
 // 在 body 上挂载 GiftAlert、Pop、Install、OpenTime 全局服务组件（初始不可见）

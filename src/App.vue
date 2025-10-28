@@ -89,12 +89,12 @@ function handleRouteChange(direction: string) {
 /* 前进/后退动画：淡入淡出 */
 .route-forward-enter-active,
 .route-back-enter-active {
-  transition: opacity 300ms ease-out;  
+  transition: opacity 150ms ease-out;  
 }
 
 .route-forward-leave-active,
 .route-back-leave-active {
-  transition: opacity 300ms ease-out;
+  transition: opacity 150ms ease-out;
 }
 
 .route-forward-enter-from,
