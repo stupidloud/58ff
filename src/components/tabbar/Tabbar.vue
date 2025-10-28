@@ -105,8 +105,7 @@ const setActiveTab = (tab: string) => {
         ui.openLogin('login')
         break
       }
-      // router.push('/deposito')
-      console.log('Depósito tab clicked - route not implemented yet')
+      router.push('/deposito')      
       break
     case 'perfil':
       console.log('[auth] isLoggedIn:', auth.isLoggedIn, 'token:', auth.token)

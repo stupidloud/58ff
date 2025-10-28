@@ -36,38 +36,35 @@ function handleRouteChange(direction: string) {
     <!-- 调试面板：切换 Pinia 登录状态 -->
     <div
       v-if="debugOpen"
-      class="fixed top-[1rem] right-[1rem] z-[2000] w-[18rem] rounded-[.5rem] border border-[var(--color-border-1)] bg-[var(--color-main-bg)] p-[.75rem] shadow-xl"
+      class="fixed top-[1rem] right-[1rem] z-[2000] w-[16rem] rounded-[.5rem] border border-[var(--color-border-1)] bg-[var(--color-main-bg)] p-[.75rem] shadow-xl"
       role="dialog"
       aria-label="调试面板"
     >
-      <div class="flex items-center justify-between">
+      <div class="flex items-center justify-between mb-[.75rem]">
         <p class="text-white/90 text-[.9rem] font-[700]">开发调试</p>
-        <div class="flex items-center gap-[.4rem]">
-          <span class="text-[.75rem] text-white/50">状态：</span>
-          <span class="text-[.75rem] font-[700]" :class="auth.isLoggedIn ? 'text-[#61D669]' : 'text-[#E84F46]'">
-            {{ auth.isLoggedIn ? '已登录' : '未登录' }}
-          </span>
-        </div>
       </div>
-      <div class="mt-[.5rem] text-[.75rem] text-white/70 break-all">token: {{ auth.token || 'null' }}</div>
-      <div class="flex items-center gap-[.5rem] mt-[.75rem]">
+      
+      <!-- 登录状态切换 -->
+      <div class="flex items-center justify-between mb-[.5rem]">
+        <span class="text-[.75rem] text-white/70">登录状态：</span>
         <button
-          class="px-[.75rem] h-[2rem] rounded-[.375rem] text-white font-[700] text-[.75rem] bg-[var(--color-active)]"
-          @click="auth.setToken(`dev-token-${Date.now()}`)"
-        >
-          登录
-        </button>
-        <button
-          class="px-[.75rem] h-[2rem] rounded-[.375rem] text-white font-[700] text-[.75rem] bg-[#E84F46]"
-          @click="auth.clearToken()"
-        >
-          登出
-        </button>
-        <button
-          class="px-[.75rem] h-[2rem] rounded-[.375rem] text-white font-[700] text-[.75rem] bg-white/20"
+          class="px-[.5rem] py-[.25rem] rounded-[.25rem] text-[.75rem] font-[600] transition-colors"
+          :class="auth.isLoggedIn ? 'bg-[#61D669] text-white' : 'bg-[#E84F46] text-white'"
           @click="auth.toggleLogin()"
         >
-          切换
+          {{ auth.isLoggedIn ? '已登录' : '未登录' }}
+        </button>
+      </div>
+      
+      <!-- 提现密码状态切换 -->
+      <div class="flex items-center justify-between">
+        <span class="text-[.75rem] text-white/70">提现密码：</span>
+        <button
+          class="px-[.5rem] py-[.25rem] rounded-[.25rem] text-[.75rem] font-[600] transition-colors"
+          :class="auth.hasWithdrawPassword ? 'bg-[#61D669] text-white' : 'bg-[#E84F46] text-white'"
+          @click="auth.toggleWithdrawPassword()"
+        >
+          {{ auth.hasWithdrawPassword ? '已设置' : '未设置' }}
         </button>
       </div>
     </div>

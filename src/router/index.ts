@@ -8,6 +8,9 @@ const router = createRouter({
     { path: '/invite', name: 'invite', component: () => import('../pages/Invite.vue') },
     { path: '/promo', name: 'promo', component: () => import('../pages/Promo.vue') },    
     { path: '/perfil', name: 'perfil', component: () => import('../pages/Perfil.vue') },
+    { path: '/deposito', name: 'deposito', component: () => import('../pages/Deposito.vue') },
+    { path: '/saque', name: 'saque', component: () => import('../pages/password/AddWithdrawPass.vue') },
+    { path: '/senha-saque', name: 'senha-saque', component: () => import('../pages/password/SetPassOk.vue') },
   ],
 })
 

@@ -53,7 +53,7 @@
                 </div>
                 <p class="texy-[.875rem] font-[600] text-white">Depósito</p>
               </div>
-              <div class="bg-[var(--color-bg-aside)] rounded-[.375rem] shadow-[inset_0_-26px_20px_-24px_rgba(215,251,103,0.4)] h-[2.5rem] flex-1 flex items-center justify-center">
+              <div class="bg-[var(--color-bg-aside)] rounded-[.375rem] shadow-[inset_0_-26px_20px_-24px_rgba(215,251,103,0.4)] h-[2.5rem] flex-1 flex items-center justify-center cursor-pointer" @click="handleSaqueClick">
                 <div class="w-[1.875rem] h-[1.875rem] text-[var(--color-active)] mr-[.375rem] flex items-center justify-center">
                   <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-[1.875rem] h-[1.875rem]">
                     <path fill-rule="evenodd" clip-rule="evenodd" d="M23.6719 10.8008H4.92188V22.832C4.92188 24.2127 6.04116 25.332 7.42187 25.332H23.6719C25.0526 25.332 26.1719 24.2127 26.1719 22.832V20.5371H21.9531C20.5616 20.5371 19.4336 19.4091 19.4336 18.0176C19.4336 16.6261 20.5616 15.498 21.9531 15.498H26.1719V13.3008C26.1719 11.9201 25.0526 10.8008 23.6719 10.8008Z" fill="currentColor"></path>
@@ -141,11 +141,28 @@
 
         
         <Tabbar></Tabbar>
+        <WithdrawPassAlert v-show="showWithdrawPass"></WithdrawPassAlert>
     </div>
 </template>
 <script setup lang="ts">
 import { ref, computed } from 'vue'
+import { useAuthStore } from '../stores/auth'
+import WithdrawPassAlert from './password/WithdrawPassAlert.vue'
 
+const auth = useAuthStore()
+const showWithdrawPass = ref(false)
+
+// 处理Saque按钮点击事件
+const handleSaqueClick = () => {
+  // 如果没有设置提现密码，显示WithdrawPass弹窗
+  if (!auth.hasWithdrawPassword) {
+    showWithdrawPass.value = true
+  } else {
+    // 如果已设置提现密码，可以进行其他操作（如跳转到提现页面）
+    console.log('已设置提现密码，可以进行提现操作')
+    // 这里可以添加跳转到提现页面的逻辑
+  }
+}
 const navs = ref([
   {
     icon: 'detail.svg',
