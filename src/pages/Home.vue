@@ -479,7 +479,7 @@ const goToNotification = () => {
 
 onMounted(() => {
   // 按顺序展示弹窗：Install → Pop → GiftAlert
-  // runSequence();
+  runSequence();
 
 
   // 不再在挂载时直接调用 Pop 或 GiftAlert，避免同时展示
