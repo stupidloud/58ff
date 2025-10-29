@@ -11,6 +11,8 @@ const router = createRouter({
     { path: '/deposito', name: 'deposito', component: () => import('../pages/Deposito.vue') },
     { path: '/saque', name: 'saque', component: () => import('../pages/password/AddWithdrawPass.vue') },
     { path: '/senha-saque', name: 'senha-saque', component: () => import('../pages/password/SetPassOk.vue') },
+    { path: '/withdraw', name: 'withdraw', component: () => import('../pages/Withdraw.vue') },
+    { path: '/convidar', name: 'convidar', component: () => import('../pages/Convidar.vue') },
   ],
 })
 

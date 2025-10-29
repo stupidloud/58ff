@@ -17,7 +17,8 @@
                 class="text-white text-[.875rem] font-[700] bg-[var(--color-bg-aside)] flex-1 h-[2.86rem] flex items-center justify-center hover:brightness-[1.1] cursor-pointer rounded-[.375rem]">
                     Retornar à página <br/>inicial
                 </div>
-                <div                    
+                <div      
+                @click="router.push('/withdraw')"              
                 class="text-white text-[.875rem] font-[700] bg-[var(--color-active)] flex-1 h-[2.86rem] flex items-center justify-center hover:brightness-[1.1] cursor-pointer  rounded-[.375rem]">
                     Confirmar
                 </div>

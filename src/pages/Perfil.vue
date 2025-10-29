@@ -116,6 +116,7 @@
             <div 
             v-for="item in navs"
             :key="item.icon"
+            @click="item.routerName ? router.push(item.routerName): null"
             class="px-[1rem] bg-[var(--color-bg-aside-2)] h-[3rem] flex items-center">
               <div
                 class="w-[1.5rem] h-[1.5rem] bg-white/60 bg-no-repeat bg-center bg-contain"
@@ -141,14 +142,15 @@
 
         
         <Tabbar></Tabbar>
-        <WithdrawPassAlert v-show="showWithdrawPass"></WithdrawPassAlert>
+        <WithdrawPassAlert v-show="showWithdrawPass" @close="showWithdrawPass = false"></WithdrawPassAlert>
     </div>
 </template>
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import { useAuthStore } from '../stores/auth'
 import WithdrawPassAlert from './password/WithdrawPassAlert.vue'
-
+import { useRouter } from 'vue-router'
+const router = useRouter()
 const auth = useAuthStore()
 const showWithdrawPass = ref(false)
 
@@ -158,9 +160,8 @@ const handleSaqueClick = () => {
   if (!auth.hasWithdrawPassword) {
     showWithdrawPass.value = true
   } else {
-    // 如果已设置提现密码，可以进行其他操作（如跳转到提现页面）
-    console.log('已设置提现密码，可以进行提现操作')
-    // 这里可以添加跳转到提现页面的逻辑
+    // 跳转到提现页面
+    router.push('/withdraw')
   }
 }
 const navs = ref([
@@ -170,7 +171,8 @@ const navs = ref([
   },
   {
     icon: 'convidar.svg',
-    label: 'Convidar'
+    label: 'Convidar',
+    routerName: 'convidar'
   },
   {
     icon: 'resgate.svg',

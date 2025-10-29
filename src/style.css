@@ -21,7 +21,7 @@
   --color-warning: #fc974c;
   --color-highlight: #f5c84c;  /* 高亮文字颜色 */
   --color-text-link: #57A6FF;  /* 链接文字颜色 */
-
+  --color-success: #53C154;  /* 成功文字颜色 */
   /* 根据每期主题色变深或变浅，请不要手动更改 */
   --color-border-1: color-mix(in srgb, var(--color-bg-aside), white 20%);
   --color-border-2: color-mix(in srgb, var(--color-bg-aside), white 10%);

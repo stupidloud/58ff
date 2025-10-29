@@ -52,7 +52,10 @@
 <script setup lang="ts">
 import { ref, nextTick, computed } from 'vue'
 import { useRouter } from 'vue-router'
+import { useAuthStore } from '../../stores/auth'
+
 const router = useRouter()
+const auth = useAuthStore()
 
 // 密码数组，每个元素代表一位数字
 const newPassword = ref(['', '', '', '', '', ''])
@@ -88,6 +91,10 @@ const handleSetPassword = async () => {
     console.log('设置密码:', newPassword.value.join(''))
     
     // 设置成功后的处理
+    // 设置提现密码状态为已设置
+    auth.setWithdrawPassword(true)
+    
+    // 跳转到成功页面
     router.push({ name: 'senha-saque' })
     
   } catch (error) {
