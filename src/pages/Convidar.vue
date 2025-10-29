@@ -2,7 +2,7 @@
     <div class="min-h-screen bg-[var(--color-main-bg)]">
         <NavBar :canReturn="true" :title="'ConvidarCentro'"></NavBar>        
 
-        <div class="sticky top-[3.1rem] z-[20] bg-[var(--color-main-bg)]">
+        <div class="sticky top-[3.1rem] z-[30] bg-[var(--color-main-bg)]">
             <div ref="navContainer"
                 class="pt-[.75rem] flex items-center border-b border-[var(--color-bg-aside)] pl-[.625rem] overflow-x-auto scrollbar-hide bg-black/5 relative">
                 <div v-for="item in navs" :key="item.id" ref="navItems"
@@ -18,7 +18,7 @@
         </div>
 
         <!-- 内容区域 -->
-        <div class="px-[.75rem] pt-[1.25rem]">
+        <div class="px-[.75rem] py-[1.25rem]">
             <component :is="currentComponent" />
         </div>
     </div>
