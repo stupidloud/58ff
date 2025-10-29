@@ -130,7 +130,7 @@ const shareInviteUrl = async () => {
                 text: 'invite Link',
                 url: inviteUrl.value
             })            
-        } else {
+        } else { 
             // 降级到复制链接
             await copyInviteUrl()
         }
