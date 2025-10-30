@@ -133,6 +133,7 @@
         </p>
       </div>
       <div
+      @click="goToSearch()"
         class="ml-[.625rem] w-[2.5rem] h-[2.5rem] rounded-[.875rem] flex items-center text-white justify-center border border-[#4a3695] bg-[#372380]">
         <ion-icon name="search-outline" class="text-white text-[2rem]"></ion-icon>
       </div>
@@ -358,6 +359,12 @@ const auth = useAuthStore();
 const isSidebarOpen = ref(false);
 const isLoginOpen = ref(false);
 const loginDefaultMode = ref<'login' | 'register'>('login');
+
+const goToSearch = () => {
+  router.push({ name: 'search' });
+}
+
+
 
 const images = [
   "/variable/banner1.png",

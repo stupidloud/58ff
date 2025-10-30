@@ -14,6 +14,7 @@ const router = createRouter({
     { path: '/withdraw', name: 'withdraw', component: () => import('../pages/Withdraw.vue') },
     { path: '/convidar', name: 'convidar', component: () => import('../pages/Convidar.vue') },
     { path: '/slot', name: 'slot', component: () => import('../pages/games/Slot.vue') },
+    { path: '/search', name: 'search', component: () => import('../pages/games/Search.vue') },
   ],
 })
 
