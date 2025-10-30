@@ -18,9 +18,7 @@ function handleRouteChange(direction: string) {
   <div class="route-container">
     <RouterView v-slot="{ Component, route }">
       <transition :name="transitionName">
-        <keep-alive>
-          <component :is="Component" :key="route.fullPath" />
-        </keep-alive>
+        <component :is="Component" :key="route.fullPath" />
       </transition>
     </RouterView>
 

@@ -1,6 +1,6 @@
 <template>
   <div 
-    class="sticky top-0 left-0 right-0 z-50 max-w-[486px] mx-auto"
+    class="sticky top-0 left-0 right-0 z-50 max-w-[486px] mx-auto w-full"
   >
     <div class="h-[3.2rem] bg-[var(--color-tabbar)] flex items-center justify-center relative">
       <!-- 返回按钮 -->

@@ -30,7 +30,6 @@ import Rede from './convidar/Rede.vue'
 import Desem from './convidar/Desem.vue'
 import Comi from './convidar/Comi.vue'
 import Taxa from './convidar/Taxa.vue'
-import Regist from './convidar/Regist.vue'
 
 const navs = ref([
     {
@@ -53,10 +52,6 @@ const navs = ref([
         id: 5,
         label: 'Taxa de Bônus do Agente'
     },
-    {
-        id: 6,
-        label: 'Registrar Subordinados'
-    }
 ])
 
 const activeNav = ref(1)
@@ -121,8 +116,7 @@ const componentMap: Record<number, any> = {
     2: Rede,
     3: Desem,
     4: Comi,
-    5: Taxa,
-    6: Regist
+    5: Taxa,    
 }
 
 // 当前组件计算属性

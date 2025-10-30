@@ -14,6 +14,9 @@ export default defineConfig(({ mode }) => {
         }
       }
     }), tailwindcss()],
-    server: { port },
+    server: { 
+      port,
+      host: '0.0.0.0' // 允许局域网访问
+    },
   }
 })

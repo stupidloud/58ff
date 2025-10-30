@@ -141,7 +141,9 @@
     <!-- 游戏tape -->
     <div class="px-[.75rem] mt-[1rem] mb-[.5rem]">
       <div class="w-full overflow-x-auto hide-scrollbar rounded-[.875rem]">
-        <div class="flex flex-nowrap gap-[.625rem] w-max">
+        <div 
+        @click="goToGame('Popular')"
+        class="flex flex-nowrap gap-[.625rem] w-max">
           <div
             class="w-[4.25rem] h-[5.375rem] px-[.25rem] pt-[.4375rem] bg-[url('/static/tab-act-bg.png')] bg-cover bg-center border-[.0625rem] border-[#D64258] rounded-[.875rem]">
             <div
@@ -154,8 +156,9 @@
             <p class="text-center text-[#FFFFFF66] text-[.625rem] font-[400]">
               100 games
             </p>
-          </div>
+          </div>        
           <div v-for="(item, idx) in gameTypes" :key="idx"
+          @click="goToGame(item.label)"
             class="w-[4.25rem] h-[5.375rem] px-[.25rem] pt-[.4375rem] bg-[var(--color-tabbar)] border-[.0625rem] border-[#D64258] rounded-[.875rem] hover:opacity-80 transition-opacity duration-200 flex-shrink-0">
             <div
               class="w-[2.25rem] h-[2.25rem] rounded-[9999px] bg-[var(--color-main-bg)] m-auto flex justify-center items-center">
@@ -425,7 +428,9 @@ const gameTypes = [
     posY: "-300%",
   },
 ];
-
+const goToGame = (gameType: string) => {
+  router.push({ name: 'slot', query: { gameType } });
+}
 const favorites = ref<Record<number, boolean>>({});
 const isFav = (idx: number) => !!favorites.value[idx];
 const toggleFav = (idx: number) => {
@@ -479,7 +484,7 @@ const goToNotification = () => {
 
 onMounted(() => {
   // 按顺序展示弹窗：Install → Pop → GiftAlert
-  runSequence();
+  // runSequence();
 
 
   // 不再在挂载时直接调用 Pop 或 GiftAlert，避免同时展示
