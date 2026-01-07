@@ -112,7 +112,7 @@
       :class="[ 'text-white transition-all duration-200 ease-out', (loading || !validPhone || !validPassword) ? 'btn-dim cursor-not-allowed' : '' ]"
       :disabled="!validPhone || !validPassword || loading"
     >
-      <template v-if="loading || !validPhone || !validPassword">
+      <template v-if="loading">
         Carregando<span class="loading-dots"><span>.</span><span>.</span><span>.</span></span>
       </template>
       <template v-else>
@@ -123,9 +123,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 import { useAuthStore } from '../../stores/auth'
 import { useUiStore } from '../../stores/ui'
+import { showToast } from '../../components/toast/service'
 
 const emit = defineEmits<{ (e: 'switch-form'): void }>()
 
@@ -171,11 +172,20 @@ const submit = async () => {
     const res = await auth.login({ phone_number: sanitize(phone.value), password: password.value })
     if (res && res.success) {
       ui.closeLogin()
+    } else {
+      const msg = res?.error || 'Falha no login'
+      showToast(msg)
     }
   } finally {
     loading.value = false
   }
 }
+
+watch(() => ui.loginOpen, (open) => {
+  if (open) {
+    loading.value = false
+  }
+})
 </script>
 
 <style scoped>

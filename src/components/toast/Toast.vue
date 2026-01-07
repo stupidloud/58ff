@@ -1,5 +1,5 @@
 <template>
-  <div v-show="visible" class="fixed inset-0 z-[1000] flex items-center justify-center pointer-events-none">
+  <div v-show="visible" class="fixed inset-0 z-[1200] flex items-center justify-center pointer-events-none">
     <div class="pointer-events-auto px-[.875rem] py-[.625rem] rounded-[.5rem] bg-[rgba(0,0,0,0.75)] text-white text-[.875rem] font-[600] shadow-lg animate-fade-in">
       {{ message }}
     </div>

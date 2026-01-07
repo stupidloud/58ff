@@ -49,14 +49,6 @@ export const useSiteStore = defineStore('site', {
       error: null as string | null,
     }
   },
-  getters: {
-    loading: (state) => state.loading,
-    error: (state) => state.error,
-    siteName: (state) => state.siteName,
-    validTreasureBoxThreshold: (state) => state.validTreasureBoxThreshold,
-    ifShowCert: (state) => state.ifShowCert,
-    lastFetched: (state) => state.lastFetched,
-  },
   actions: {
     async fetchSiteInfo({ forceRefresh = false }: { forceRefresh?: boolean } = {}) {
       if (!forceRefresh) {

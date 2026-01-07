@@ -33,10 +33,6 @@ export const useSupportStore = defineStore('support', {
     }
   },
   getters: {
-    contacts: (state) => state.contacts,
-    loading: (state) => state.loading,
-    error: (state) => state.error,
-    lastFetched: (state) => state.lastFetched,
     instagramContact: (state) => state.contacts.find((c) => c.link_type === '官方Instagram'),
     telegramContact: (state) => state.contacts.find((c) => c.link_type === '官方Telegram'),
     whatsappContact: (state) => state.contacts.find((c) => c.link_type === '官方WhatsApp'),

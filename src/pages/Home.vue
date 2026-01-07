@@ -7,7 +7,7 @@
         <div
           class="absolute top-[-.2rem] left-[.1rem] w-[3.6rem] h-[3.6rem] bg-[rgba(255,255,255,0.1)] transform -translate-x-1/2 -translate-y-1/2 rounded-[100px]">
         </div>
-        <div class="absolute top-[.25rem] left-[.25rem] text-[.875rem] text-white">
+        <div class="absolute top-[.25rem] left-[.25rem] text-[.875rem] text-white cursor-pointer" @click="showInstallCTA = false" role="button" aria-label="Fechar">
           <svg fill="currentColor" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
             <path
               d="M289.94 256l95-95A24 24 0 00351 127l-95 95-95-95a24 24 0 00-34 34l95 95-95 95a24 24 0 1034 34l95-95 95 95a24 24 0 0034-34z">

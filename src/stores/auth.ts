@@ -104,6 +104,7 @@ export const useAuthStore = defineStore('auth', {
       this.error = null
       try {
         const res = await authApi.login(phone_number, password)
+        
         if (res.code === 1) {
           const { token, player } = res.data
           this.token = token

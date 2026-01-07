@@ -3,6 +3,7 @@
  */
 
 import { API_BASE_URL, REQUEST_TIMEOUT, TOKEN_STORAGE_KEY } from '../config/api'
+import { ERROR_MESSAGES_PT_BR } from './errorMessages'
 
 // 响应数据类型
 export interface ApiResponse<T = any> {
@@ -74,6 +75,11 @@ class HttpClient {
     }
 
     const data: ApiResponse<T> = await response.json()
+
+    {
+      const m = ERROR_MESSAGES_PT_BR[data.code as number]
+      if (typeof m === 'string') data.msg = m
+    }
 
     // 检查业务状态码 - 认证相关错误时清除本地token
     if (data.code === 1002 || data.code === 1004 || data.code === 1006 || data.code === 1007) {

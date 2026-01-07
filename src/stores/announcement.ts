@@ -32,9 +32,6 @@ export const useAnnouncementStore = defineStore('announcement', {
     }
   },
   getters: {
-    announcements: (state) => state.announcements,
-    error: (state) => state.error,
-    lastFetched: (state) => state.lastFetched,
     announcementContents: (state) => state.announcements.map((a) => a.content),
     firstAnnouncementContent: (state) => state.announcements[0]?.content || '',
   },

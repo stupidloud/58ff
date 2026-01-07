@@ -116,7 +116,7 @@
             <div 
             v-for="item in navs"
             :key="item.icon"
-            @click="item.routerName ? router.push(item.routerName): null"
+            @click="handleNavClick(item)"
             class="px-[1rem] bg-[var(--color-bg-aside-2)] h-[3rem] flex items-center">
               <div
                 class="w-[1.5rem] h-[1.5rem] bg-white/60 bg-no-repeat bg-center bg-contain"
@@ -154,6 +154,8 @@ const router = useRouter()
 const auth = useAuthStore()
 const showWithdrawPass = ref(false)
 
+type NavItem = { icon: string; label: string; routerName?: string }
+
 // 处理Saque按钮点击事件
 const handleSaqueClick = () => {
   // 如果没有设置提现密码，显示WithdrawPass弹窗
@@ -162,6 +164,17 @@ const handleSaqueClick = () => {
   } else {
     // 跳转到提现页面
     router.push('/withdraw')
+  }
+}
+const handleNavClick = async (item: NavItem) => {
+  if (item.icon === 'logout.svg') {
+    await auth.logout()
+    window.showToast?.('Saiu com sucesso')
+    router.push('/')
+    return
+  }
+  if (item.routerName) {
+    router.push(item.routerName)
   }
 }
 const navs = ref([
