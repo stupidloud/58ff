@@ -3,7 +3,7 @@
     <!-- 头部 -->
     <div class="w-full h-auto sticky top-0 z-10">
       <!-- 下载模块 -->
-      <div class="bg-[var(--color-main-bg)] flex items-center w-full overflow-hidden relative h-[3.125rem] px-[.75rem]">
+      <div v-if="showInstallCTA" class="bg-[var(--color-main-bg)] flex items-center w-full overflow-hidden relative h-[3.125rem] px-[.75rem]">
         <div
           class="absolute top-[-.2rem] left-[.1rem] w-[3.6rem] h-[3.6rem] bg-[rgba(255,255,255,0.1)] transform -translate-x-1/2 -translate-y-1/2 rounded-[100px]">
         </div>
@@ -15,15 +15,18 @@
           </svg>
         </div>
         <div class="ml-[2rem] flex items-center">
-          <img src="/variable/favicon_38.png" alt="" class="w-[2rem] h-[2rem]" />
+          <img src="/icon-512.png" alt="" class="w-[2rem] h-[2rem]" />
           <div class="text-left mx-[.438rem]">
             <p class="text-white text-[.75rem]">Baixe Nosso APP,</p>
             <p class="text-white text-[.75rem]">Ganhe Super Prêmios!</p>
           </div>
           <img src="/static/pwa-money.png" alt="" class="w-[1.75rem] h-[1.75rem]" />
         </div>
-        <div
-          class="w-[6.75rem] h-[2.125rem] flex items-center justify-between ml-auto rounded-[.467rem] py-[.5rem] px-[.625rem] bg-[linear-gradient(90deg,rgb(195,60,80)_-27.5%,rgb(196,228,94)_127.5%)]">
+        <div          
+          class="w-[6.75rem] h-[2.125rem] flex items-center justify-between ml-auto rounded-[.467rem] py-[.5rem] px-[.625rem] bg-[linear-gradient(90deg,rgb(195,60,80)_-27.5%,rgb(196,228,94)_127.5%)] cursor-pointer"
+          @click="onInstallClick"
+          role="button"
+          aria-label="Instalar PWA">
           <div class="text-white">
             <svg width="1.65rem" height="1.65rem" viewBox="0 0 25 24" fill="currentColor"
               xmlns="http://www.w3.org/2000/svg" class="s-ion-icon">
@@ -342,7 +345,7 @@ import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { showGiftAlert } from "../components/giftAlert/service";
 import { showPop, hidePop } from "../components/pop/service";
-import { showInstall, hideInstall } from "../components/install/service";
+import { showInstall } from "../components/install/service";
 import { showOpenTime } from "../components/openTime/service";
 import SideBar from "../components/SideBar.vue";
 import Login from "./login/Login.vue";
@@ -432,45 +435,15 @@ const toggleFav = (idx: number) => {
   favorites.value[idx] = !isFav(idx);
 };
 
+const showInstallCTA = ref(true)
+
 // GiftAlert 相关：在首页创建并加载提示
 
 const loadAlert = () => {
   showGiftAlert();
 };
 
-// 串行执行：Install → Pop → GiftAlert
-const runSequence = () => {
-  // Step 1: Install（先确保隐藏 Pop）
-  hidePop();
-  showInstall({
-    onClose: () => step2(),
-    onCancel: () => step2(),
-    onConfirm: () => step2(),
-  });
-
-  // Step 2: Pop（显示前确保隐藏 Install）
-  const step2 = () => {
-    hideInstall();
-    showPop({
-      title: "RESGATAR CÓDIGO",
-      subtitle: "CODIGO DE RESGATE DE HOJE:",
-      code: "92774",
-      lines: [
-        "EO BÔNUS MÁXIMO É 777 REAIS",
-        "SIGA O CANAL OFICIAL PARA",
-        "GANHAR MAIS BÔNUS A TEMPO.",
-      ],
-      buttonText: "CLIQUE PARA SEGUIR",
-      onClick: () => step3(),
-      onClose: () => step3(),
-    });
-  };
-
-  // Step 3: GiftAlert
-  const step3 = () => {
-    loadAlert();
-  };
-};
+// 已移除串行弹窗逻辑，按需触发安装弹窗或其他 UI
 
 // 跳转到通知页面
 const goToNotification = () => {
@@ -483,8 +456,39 @@ onMounted(() => {
 
 
   // 不再在挂载时直接调用 Pop 或 GiftAlert，避免同时展示
-
 });
+
+function onInstallClick() {
+  showInstall({
+    onConfirm: async () => {
+      const prompt = (window as any).deferredPrompt
+      if (prompt && typeof prompt.prompt === 'function') {
+        try {
+          await prompt.prompt()
+        } catch {}
+      }
+    },
+  })
+}
+
+function computeInstallVisibility() {
+  try {
+    const isStandalone = window.matchMedia && window.matchMedia('(display-mode: standalone)').matches
+    const isiOSStandalone = (navigator as any).standalone === true
+    const hasPrompt = !!(window as any).deferredPrompt
+    showInstallCTA.value = !isStandalone && !isiOSStandalone && hasPrompt
+  } catch {
+    showInstallCTA.value = true
+  }
+}
+
+computeInstallVisibility()
+window.addEventListener('appinstalled', () => {
+  showInstallCTA.value = false
+})
+window.addEventListener('beforeinstallprompt', () => {
+  computeInstallVisibility()
+})
 </script>
 
 <style scoped>

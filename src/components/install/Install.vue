@@ -7,7 +7,7 @@
     <div class="absolute left-0 right-0 bottom-0 pb-[env(safe-area-inset-bottom)] p-[1.2rem]">
       <div class="mx-auto max-w-[486px] w-full rounded-t-[1.25rem]  bg-[var(--color-main-bg)]/95 backdrop-blur border  shadow-2xl overflow-hidden animate-slide-up">
         <div class="flex items-start gap-3 p-4">
-          <img src="/variable/favicon_38.png" alt="app" class="w-[3.75rem] h-auto rounded-[.75rem] shadow" />
+          <img src="/icon-512.png" alt="app" class="w-[3.75rem] h-auto rounded-[.75rem] shadow" />
           <div class="text-white/90">
             <p class="text-[.85rem] leading-[1.35rem]">Gostaríamos de adicionar o {{ appName }} à sua tela inicial para as últimas apostas grátis e atualizações de bônus.</p>
           </div>
@@ -34,7 +34,7 @@ export default defineComponent({
       onClose?: () => void
     }>('installState')!
 
-    const appName = import.meta.env.VITE_APP_NAME
+    const appName = import.meta.env.VITE_SITE_NAME
 
     const cancel = () => {
       try { state.onCancel?.() } catch {}

@@ -124,6 +124,8 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue'
+import { useAuthStore } from '../../stores/auth'
+import { useUiStore } from '../../stores/ui'
 
 const emit = defineEmits<{ (e: 'switch-form'): void }>()
 
@@ -133,6 +135,8 @@ const password = ref('')
 const showPwd = ref(false)
 const remember = ref(true)
 const loading = ref(false)
+const auth = useAuthStore()
+const ui = useUiStore()
 
 const sanitize = (s: string) => s.replace(/\D/g, '')
 const onPhoneInput = (e: Event) => {
@@ -143,18 +147,7 @@ const clearPhone = () => {
   phone.value = ''
 }
 
-// 巴西手机号：两个输入合并为一个 phone（包含 DDD + Número）
-const validDDD = computed(() => {
-  const digits = sanitize(phone.value)
-  const d = digits.slice(0, 2)
-  return /^[1-9]\d$/.test(d) && Number(d) >= 11
-})
-const validLine = computed(() => {
-  const digits = sanitize(phone.value)
-  const l = digits.slice(2)
-  return /^9\d{8}$/.test(l) || /^[2-5]\d{7}$/.test(l)
-})
-const validPhone = computed(() => validDDD.value && validLine.value)
+const validPhone = computed(() => sanitize(phone.value).length > 0)
 
 // 密码 6-12 个字符
 const validPassword = computed(() => password.value.length >= 6 && password.value.length <= 12)
@@ -175,8 +168,10 @@ const submit = async () => {
   if (!validPhone.value || !validPassword.value || loading.value) return
   loading.value = true
   try {
-    await new Promise((r) => setTimeout(r, 1200))
-    // TODO: 接入登录接口
+    const res = await auth.login({ phone_number: sanitize(phone.value), password: password.value })
+    if (res && res.success) {
+      ui.closeLogin()
+    }
   } finally {
     loading.value = false
   }
@@ -184,13 +179,11 @@ const submit = async () => {
 </script>
 
 <style scoped>
-.login-form {
- }
  
  /* 记住密码对勾动画 */
  .check-enter-active,
  .check-leave-active {
-   transition: opacity 220ms cubic-bezier(.2,.8,.2,1), transform 220ms cubic-bezier(.2,.8,.2,1);
+  transition: opacity 220ms cubic-bezier(.2,.8,.2,1), transform 220ms cubic-bezier(.2,.8,.2,1);
  }
  .check-enter-from,
  .check-leave-to {

@@ -11,6 +11,8 @@ import NavBar from './components/NavBar/NavBar.vue'
 import Tabbar from './components/tabbar/Tabbar.vue'
 import Empty from './components/empty/Empty.vue'
 import { createPinia } from 'pinia'
+import { setGetCurrentUserFunction } from './services/api'
+import { useAuthStore } from './stores/auth'
 
 const app = createApp(App)
 const pinia = createPinia()
@@ -24,9 +26,30 @@ app.component('Tabbar', Tabbar)
 app.component('Empty', Empty)
 app.mount('#app')
 
+setGetCurrentUserFunction(() => useAuthStore().user)
+
 // 在 body 上挂载 GiftAlert、Pop、Install、OpenTime 全局服务组件（初始不可见）
 mountGiftAlert()
 mountPop()
 mountInstall()
 mountOpenTime()
 mountToast()
+
+declare global {
+  interface Window {
+    deferredPrompt?: any
+  }
+}
+
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/sw.js', { scope: '/' }).catch(() => {})
+}
+
+window.addEventListener('beforeinstallprompt', (e: Event) => {
+  e.preventDefault()
+  // @ts-ignore
+  window.deferredPrompt = e
+})
+
+window.addEventListener('appinstalled', () => {
+})

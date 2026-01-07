@@ -111,7 +111,7 @@
 
 <script setup lang="ts">
 import {ref} from 'vue'
-const appUrl = ref('https://' + import.meta.env.VITE_APP_NAME)
+const appUrl = ref('https://' + import.meta.env.VITE_SITE_NAME)
 const plats = ref([
     'email.svg',
     'youtube.svg',
