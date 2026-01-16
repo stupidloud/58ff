@@ -5,11 +5,11 @@
                 <img class="w-[3.25rem] h-[3.25rem] rounded-[100px]" src="/static/profile/avatar.jpg" alt="">
                 <div class="ml-[1rem]">
                     <div class="flex items-center">
-                        <p class="text-white font-[600] text-[.875rem] text-left">11965864233 </p>
+                        <p class="text-white font-[600] text-[.875rem] text-left">{{ username }} </p>
                         <div class="flex items-center relative h-[1.5rem] ml-[.4375rem]">
-                            <img class="w-[1.5rem] h-[1.5rem] relative z-2" src="/static/profile/vip1.png" alt="">
+                            <img class="w-[1.5rem] h-[1.5rem] relative z-2" :src="vipImagePath" alt="">
                             <div class="ml-[-1rem] bg-[url('/static/profile/vipTextSvg1.svg')] bg-no-repeat bg-center bg-[length:100%_100%] w-[3.125rem] h-[1.105rem] text-[.65rem] font-[600] text-white flex items-center justify-center indent-[.7em]">
-                                VIP 1
+                                VIP {{ currentVipLevel }}
                             </div>
                         </div>                        
                     </div>
@@ -45,7 +45,7 @@
             </div>            
             <div class="h-[1px] w-full bg-[var(--color-border-2 )]"></div>
             <div class="flex items-center w-full gap-[.75rem] mt-[1.1rem]">
-              <div class="bg-[var(--color-bg-aside)] rounded-[.375rem] shadow-[inset_0_-26px_20px_-24px_rgba(215,251,103,0.4)] h-[2.5rem] flex-1 flex items-center justify-center">
+              <div class="bg-[var(--color-bg-aside)] rounded-[.375rem] shadow-[inset_0_-26px_20px_-24px_rgba(215,251,103,0.4)] h-[2.5rem] flex-1 flex items-center justify-center cursor-pointer" @click="router.push('/deposito')">
                 <div class="w-[1.875rem] h-[1.875rem] text-[var(--color-active)] mr-[.375rem]  flex items-center justify-center">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" class="w-[1.875rem] h-[1.875rem]">
                     <path d="M16.81 7.668a.378.378 0 0 1 .338.09c.084.081.11.196.066.299-.404.94-.592 1.485-.61 2.156.77.268 1.397.68 1.867 1.226.508.59.71 1.197.788 1.609.018.01.07.03.18.03h.636c.539 0 .978.378.978.843v1.644c0 .464-.439.842-.978.842h-.636c-.187 0-.239.061-.327.222-.468.84-1.199 1.51-2.114 1.938-.073.035-.098.065-.102.077v.025c.01.014.018.03.025.045l.201.46a.756.756 0 0 1-.022.667.965.965 0 0 1-.568.46l-1.256.41a1.159 1.159 0 0 1-.36.058c-.418 0-.797-.225-.947-.559a9.454 9.454 0 0 1-.282-.642.58.58 0 0 0-.032-.07h-.033c-.079 0-.198.01-.348.024-.31.029-.778.072-1.468.072-.765 0-1.24-.085-1.555-.142-.103-.018-.194-.036-.25-.04a.801.801 0 0 0-.053.103c-.133.305-.298.676-.304.69-.149.337-.53.564-.95.564-.123 0-.243-.02-.359-.058l-1.259-.41a.962.962 0 0 1-.565-.46.758.758 0 0 1-.019-.677c.007-.014.225-.465.344-.781.044-.116.017-.135-.095-.21l-.028-.018c-.763-.526-2.052-1.638-2.127-3.181a5.323 5.323 0 0 1 .17-1.67 3.103 3.103 0 0 1-.703-.296c-.587-.344-.897-.832-.897-1.41 0-.61.382-1.148.974-1.368.173-.064.375.005.45.154.074.15-.006.323-.18.387a.858.858 0 0 0-.56.828c0 .373.195.68.582.912.2.12.404.19.528.227a4.288 4.288 0 0 1 1.585-1.903c1.497-1.004 3.221-1.492 5.27-1.492.735 0 1.457.065 2.15.193.588-.968 1.525-1.58 2.855-1.868Zm-.215 5.286c-.414 0-.75.312-.75.696.001.385.336.697.75.697.413 0 .747-.312.747-.697 0-.384-.334-.696-.747-.696ZM9.561 2.77c2.117 0 3.834 1.726 3.834 3.855a3.86 3.86 0 0 1-.373 1.661c-3.22-.353-5.247.452-6.224 1.012a3.854 3.854 0 0 1-1.07-2.673c0-2.13 1.716-3.855 3.833-3.855ZM8.488 5.544v2.16h2.146v-2.16H8.488Z"></path>
@@ -66,28 +66,28 @@
             </div>
         </div>
         <div class="py-[1rem] px-[.75rem] mt-[.75rem]">
-          <div class="bg-[url('/static/profile/vipCardBg1.png')] bg-no-repeat bg-[bottom_0_left_0] bg-[length:100%_11.25rem] h-[11.875rem] w-full pt-[1.25rem] px-[.8125rem] pb-[.8125rem] mb-[1rem] relative">
+          <div :style="{ backgroundImage: `url(${vipBgPath})`, backgroundSize: '100% 11.25rem', backgroundRepeat: 'no-repeat', backgroundPosition: 'bottom 0 left 0' }" class="h-[11.875rem] w-full pt-[1.25rem] px-[.8125rem] pb-[.8125rem] mb-[1rem] relative">
             <div class="w-[7.0938rem] h-[2.875rem] px-[.625rem] bg-[url('/static/profile/vipDetail1.png')] bg-no-repeat bg-cover bg-center absolute top-[-.75rem] right-[.125rem] flex justify-center items-center text-[.75rem] text-white">
               Detalhes VIP >
             </div>
             <div>
               <div class="flex items-center">
                 <div class="flex items-center relative h-[1.5rem]">
-                    <img class="w-[2.375rem] h-[2.375rem] relative z-2" src="/static/profile/vip1.png" alt="">
+                    <img class="w-[2.375rem] h-[2.375rem] relative z-2" :src="vipImagePath" alt="">
                     <div class="ml-[-1.25rem] bg-[url('/static/profile/vipTextSvg1.svg')] bg-no-repeat bg-center bg-[length:100%_100%] w-[4.5rem] h-[1.25rem] text-[.75rem] font-[600] text-white flex items-center justify-center indent-[.7em]">
-                        VIP 0
+                        VIP {{ currentVipLevel }}
                     </div>
                 </div>         
                 <p class="ml-[.75rem] text-white/40 text-[.75rem] font-[600]">Nível Atual</p>
               </div>
               <div class="flex items-center mt-[2.375rem] justify-between">
                 <div class="releative w-[17.125rem] h-[.25rem] bg-white/20 rounded-[100px]">
-                  <div class="w-[20%] h-full bg-[var(--color-active)] rounded-[100px]"></div>
+                  <div class="h-full bg-[var(--color-active)] rounded-[100px]" :style="{ width: depositPercent }"></div>
                 </div>
                 <div class="flex items-center relative h-[1.5rem]">
-                    <img class="w-[1.5rem] h-[1.5rem] relative z-2" src="/static/profile/vip2.png" alt="">
+                    <img class="w-[1.5rem] h-[1.5rem] relative z-2" :src="nextVipImagePath" alt="">
                     <div class="ml-[-1rem] bg-[url('/static/profile/vipTextSvg1.svg')] bg-no-repeat bg-center bg-[length:100%_100%] w-[3.125rem] h-[1.105rem] text-[.65rem] font-[600] text-white flex items-center justify-center indent-[.7em]">
-                        VIP 1
+                        VIP {{ currentVipLevel + 1 }}
                     </div>
                 </div>  
               </div>
@@ -96,20 +96,21 @@
                 <p class="w-[3px] h-[3px] rounded-[100px] mr-[.625rem] bg-white/40"></p>
                 <p class="text-[.625rem] text-white/40"> Aposta necessária： </p>
                 <p class="text-[.625rem] text-white">
-                  <span class="text-[var(--color-warning)]">0,00</span>
-                  (0,00/100,00)
+                  <span class="text-[var(--color-warning)]">{{ betCurrentDisplay }}</span>
+                  ({{ betCurrentDisplay }}/{{ betMaxDisplay }})
                 </p>
               </div>
             </div>
           </div>
-          <div class="px-[1rem] bg-[var(--color-bg-aside-2)] rounded-[.375rem] h-[3rem] flex items-center">
+          <!-- 这个项目没有客服 -->
+          <!-- <div class="px-[1rem] bg-[var(--color-bg-aside-2)] rounded-[.375rem] h-[3rem] flex items-center">
             <div class="w-[1.5rem] h-[1.5rem] bg-[var(--color-active)] mask-[url('/static/profile/customer.svg')] bg-no-repeat bg-contain"></div>
             <p class="ml-[.625rem] text-white text-[.75rem] font-[500]">Suporte</p>
             <div class="ml-auto flex-1 pr-[1rem] flex items-center justify-end">
               <p class="bg-[var(--color-active)] w-[2rem] h-[1.125rem] flex items-center justify-center text-[.75rem] text-white rounded-[999px]">23</p>
             </div>
             <ion-icon class="ml-auto text-[.875rem] text-white/40" name="chevron-forward-outline"></ion-icon>
-          </div>   
+          </div>    -->
           
           
           <div class="rounded-[.375rem] overflow-hidden mt-[.75rem]">
@@ -150,6 +151,7 @@ import { ref, computed } from 'vue'
 import { useAuthStore } from '../stores/auth'
 import WithdrawPassAlert from './password/WithdrawPassAlert.vue'
 import { useRouter } from 'vue-router'
+import { playerApi, vipApi, type VipLevel } from '../services/api'
 const router = useRouter()
 const auth = useAuthStore()
 const showWithdrawPass = ref(false)
@@ -201,7 +203,51 @@ const navs = ref([
   }
 ])
 
-const userId = ref('1867190766')
+const username = computed(() => auth.username)
+const userId = computed(() => String(auth.user?.id ?? ''))
+
+const currentVipLevel = computed(() => auth.vipLevel)
+const vipLevels = ref<VipLevel[]>([])
+const vipBgPath = computed(() => {
+  const l = currentVipLevel.value
+  if (l >= 25) return '/static/promo/levelBg6.png'
+  if (l >= 20) return '/static/promo/levelBg5.png'
+  if (l >= 15) return '/static/promo/levelBg4.png'
+  if (l >= 10) return '/static/promo/levelBg3.png'
+  if (l >= 5) return '/static/promo/levelBg2.png'
+  return '/static/promo/levelBg1.png'
+})
+const vipImagePath = computed(() => {
+  const l = Math.max(1, Math.min(30, currentVipLevel.value || 1))
+  return `/static/promo/vip${l}.png`
+})
+const nextVipImagePath = computed(() => {
+  const l = Math.max(1, Math.min(30, (currentVipLevel.value || 0) + 1))
+  return `/static/promo/vip${l}.png`
+})
+const betCurrent = computed(() => auth.user?.total_bet || 0)
+const betMax = computed(() => {
+  const next = vipLevels.value.find(v => v.level === (currentVipLevel.value + 1))
+  return next?.turnover_requirement || 0
+})
+const betPercent = computed(() => {
+  const max = betMax.value || 1
+  return Math.min(100, Math.round((betCurrent.value / max) * 100)) + '%'
+})
+const depositCurrent = computed(() => auth.user?.total_deposit || 0)
+const depositMax = computed(() => {
+  const next = vipLevels.value.find(v => v.level === (currentVipLevel.value + 1))
+  return next?.deposit_requirement || 0
+})
+const depositPercent = computed(() => {
+  const max = depositMax.value || 1
+  return Math.min(100, Math.round((depositCurrent.value / max) * 100)) + '%'
+})
+const numberFormatter2 = new Intl.NumberFormat('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+const betCurrentDisplay = computed(() => numberFormatter2.format(betCurrent.value))
+const betMaxDisplay = computed(() => numberFormatter2.format(betMax.value))
+const depositCurrentDisplay = computed(() => numberFormatter2.format(depositCurrent.value))
+const depositMaxDisplay = computed(() => numberFormatter2.format(depositMax.value))
 
 const copyId = async () => {
   const text = userId.value
@@ -231,7 +277,7 @@ const copyId = async () => {
 
 // Balance animation state
 const isRefreshing = ref(false)
-const targetBalance = ref(0.20)
+const targetBalance = ref<number>(auth.balance)
 const animatedBalance = ref<number>(targetBalance.value)
 
 const numberFormatter = new Intl.NumberFormat('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
@@ -255,13 +301,36 @@ function animateNumber(from: number, to: number, duration: number, onUpdate: (va
 function onRefresh() {
   if (isRefreshing.value) return
   isRefreshing.value = true
-  animatedBalance.value = 0
-  animateNumber(0, targetBalance.value, 800, (v) => {
-    animatedBalance.value = v
-  }, () => {
-    isRefreshing.value = false
-  })
+  ;(async () => {
+    try {
+      const res = await playerApi.getBalance()
+      if (res.code === 1) {
+        animatedBalance.value = 0
+        targetBalance.value = res.data.balance
+        await auth.updateBalance(res.data.balance)
+        animateNumber(0, targetBalance.value, 800, (v) => {
+          animatedBalance.value = v
+        }, () => {
+          isRefreshing.value = false
+        })
+      } else {
+        isRefreshing.value = false
+      }
+    } catch {
+      isRefreshing.value = false
+    }
+  })()
 }
+
+animatedBalance.value = auth.balance
+;(async () => {
+  try {
+    const res = await vipApi.getRequirements()
+    if (res.code === 1) {
+      vipLevels.value = res.data.levels || []
+    }
+  } catch {}
+})()
 </script>
 <style scoped>
 

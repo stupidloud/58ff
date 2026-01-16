@@ -25,6 +25,7 @@
 </template>
 <script setup lang="ts">
 import { ref, onMounted, nextTick, computed } from 'vue'
+import { useRouter } from 'vue-router'
 import Link from './convidar/Link.vue'
 import Rede from './convidar/Rede.vue'
 import Desem from './convidar/Desem.vue'
@@ -60,6 +61,7 @@ const navs = ref([
 ])
 
 const activeNav = ref(1)
+const router = useRouter()
 const navContainer = ref<HTMLElement>()
 const navItems = ref<HTMLElement[]>([])
 const indicatorLeft = ref(0)
@@ -85,6 +87,11 @@ const updateIndicator = () => {
 // 切换导航
 const switchNav = (navId: number) => {
     activeNav.value = navId
+    if (navId === 1) {
+        router.push('/convidar')
+    } else if (navId === 2) {
+        router.push('/event2')
+    }
     nextTick(() => {
         updateIndicator()
         scrollToActiveItem()

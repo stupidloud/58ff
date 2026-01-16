@@ -2,7 +2,7 @@
     <div class="w-full">        
         <div class="w-full h-[16.625rem] bg-[url('/static/convidar/share-url-bg.png')] bg-cover bg-center bg-[var(--color-bg-aside-2)] rounded-[.625rem] px-[.625rem] pt-[1.25rem]">
             <p class="text-left text-white text-[1.5rem] font-[700]">​​Compartilhar Informação​​</p>
-            <p class="text-left text-white/40 text-[.875rem]">​​ID de Indicação​​: 0</p>
+            <p class="text-left text-white/40 text-[.875rem]">​​ID de Indicação​​: {{ inviteId }}</p>
             <div class="rounded-[.375rem] w-full mt-[.625rem] h-[6.25rem] border border-[var(--color-border-1)] flex items-center p-[.25rem]">
                 <div class="w-[5rem] px-[.5625rem]">
                     <div class="h-auto w-full bg-white rounded-[.25rem] flex items-center justify-center" v-html="qrCodeSvg"></div>
@@ -33,11 +33,14 @@
     </div>
 </template>
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed, watch } from 'vue'
+import { useAuthStore } from '../../stores/auth'
 import QRCode from 'qrcode'
 
-// 邀请链接
-const inviteUrl = ref('https://58ff2.com/?pid=1867190766')
+const auth = useAuthStore()
+const inviteId = computed(() => auth.user?.id ?? 0)
+const siteOrigin = computed(() => (typeof window !== 'undefined' ? window.location.origin : ''))
+const inviteUrl = ref('')
 const qrCodeSvg = ref('')
 const plats = ref([
     'email.svg',
@@ -52,20 +55,20 @@ const plats = ref([
 ])
 // 生成二维码SVG
 const generateQRCode = async () => {
-    try {
-        const svgString = await QRCode.toString(inviteUrl.value, {
-            type: 'svg',
-            width: 200,
-            margin: 1,
-            color: {
-                dark: '#000000',
-                light: '#FFFFFF'
-            }
-        })
-        qrCodeSvg.value = svgString
-    } catch (error) {
-        console.error('生成二维码失败:', error)
-    }
+  try {
+    const svgString = await QRCode.toString(inviteUrl.value, {
+      type: 'svg',
+      width: 200,
+      margin: 1,
+      color: {
+        dark: '#000000',
+        light: '#FFFFFF'
+      }
+    })
+    qrCodeSvg.value = svgString
+  } catch (error) {
+    console.error('生成二维码失败:', error)
+  }
 }
 
 // 复制邀请链接
@@ -139,7 +142,19 @@ const shareInviteUrl = async () => {
 }
 
 onMounted(() => {
+    const updateInviteUrl = () => {
+      inviteUrl.value = `${siteOrigin.value}/?pid=${inviteId.value}`
+    }
+    updateInviteUrl()
     generateQRCode()
+    watch(inviteId, () => {
+      updateInviteUrl()
+      generateQRCode()
+    })
+    watch(siteOrigin, () => {
+      updateInviteUrl()
+      generateQRCode()
+    })
 })
 </script>
 <style lang="css" scoped>
