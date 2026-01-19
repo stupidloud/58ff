@@ -99,14 +99,14 @@
 
     <!-- 礼物区域 -->
     <div class="flex justify-between px-[.75rem] mt-[.75rem]">
-      <div class="rounded-[.875rem] w-[11rem] overflow-hidden animate-float-1">
+      <div class="rounded-[.875rem] w-[11rem] overflow-hidden animate-float-1 cursor-pointer" @click="router.push('/invite')">
         <img class="w-full h-auto" src="/static/gift1.gif" alt="" />
       </div>
       <div class="flex flex-col items-center justify-between">
-        <div class="rounded-[.875rem] w-[11rem] overflow-hidden animate-float-2">
+        <div class="rounded-[.875rem] w-[11rem] overflow-hidden animate-float-2 cursor-pointer" @click="router.push('/promo/event/missao')">
           <img class="w-full h-auto" src="/static/gift2.gif" alt="" />
         </div>
-        <div class="rounded-[.875rem] w-[11rem] overflow-hidden animate-float-3">
+        <div class="rounded-[.875rem] w-[11rem] overflow-hidden animate-float-3 cursor-pointer" @click="router.push('/promo/event/turntable')">
           <img class="w-full h-auto" src="/static/gift3.gif" alt="" />
         </div>
       </div>

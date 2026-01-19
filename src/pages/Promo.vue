@@ -17,13 +17,15 @@
      </div>
  
  </template>
- <script setup lang="ts">
-import {ref, computed, defineAsyncComponent} from 'vue'
+<script setup lang="ts">
+import {ref, computed, defineAsyncComponent, onMounted, nextTick} from 'vue'
+import { useRoute } from 'vue-router'
 import Tabbar from '../components/tabbar/Tabbar.vue'
 
 const activeTab = ref(1)
 const navContainer = ref<HTMLElement>()
 const navItems = ref<HTMLElement[]>([])
+const route = useRoute()
 
 const setActive = (id: number) => {
   activeTab.value = id
@@ -56,7 +58,7 @@ const scrollToActiveItem = (activeId: number) => {
 
 const viewsMap: Record<number, any> = {
   1: defineAsyncComponent(() => import('./promo/eventos.vue')),
-  2: defineAsyncComponent(() => import('./promo/rebate.vue')),
+  // 2: defineAsyncComponent(() => import('./promo/rebate.vue')),
   3: defineAsyncComponent(() => import('./promo/vip.vue')),
   4: defineAsyncComponent(() => import('./promo/codigo.vue')),
   5: defineAsyncComponent(() => import('./promo/hist.vue')),
@@ -70,10 +72,10 @@ const nav = ref([
         label: 'Eventos',
         id: 1
     },
-    {
-        label: 'Rebate',
-        id: 2
-    },
+    // {
+    //     label: 'Rebate',
+    //     id: 2
+    // },
     {
         label: 'VIP',
         id: 3
@@ -91,6 +93,16 @@ const nav = ref([
         id: 6
     }
 ])
+
+onMounted(async () => {
+  const q = route.query?.tab
+  const id = typeof q === 'string' ? Number(q) : Array.isArray(q) ? Number(q[0]) : NaN
+  if (!Number.isNaN(id) && viewsMap[id]) {
+    activeTab.value = id
+    await nextTick()
+    scrollToActiveItem(id)
+  }
+})
 </script>
 <style scoped>
 .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }

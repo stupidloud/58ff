@@ -85,6 +85,7 @@ export default defineConfig(({ mode }) => {
       proxy: {
         '/api_v1': {
           target: 'https://ondas-777.com',
+          // target: 'https://backend.reveillon777.win',          
           changeOrigin: true,
           secure: true
         }

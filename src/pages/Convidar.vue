@@ -25,13 +25,13 @@
 </template>
 <script setup lang="ts">
 import { ref, onMounted, nextTick, computed } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRoute } from 'vue-router'
 import Link from './convidar/Link.vue'
 import Rede from './convidar/Rede.vue'
 import Desem from './convidar/Desem.vue'
 import Comi from './convidar/Comi.vue'
 import Taxa from './convidar/Taxa.vue'
-import Regist from './convidar/Regist.vue'
+import DadosSubordinado from './convidar/DadosSubordinado.vue'
 
 const navs = ref([
     {
@@ -56,16 +56,16 @@ const navs = ref([
     },
     {
         id: 6,
-        label: 'Registrar Subordinados'
+        label: 'Dados do Subordinado'
     }
 ])
 
 const activeNav = ref(1)
-const router = useRouter()
 const navContainer = ref<HTMLElement>()
 const navItems = ref<HTMLElement[]>([])
 const indicatorLeft = ref(0)
 const indicatorWidth = ref(0)
+const route = useRoute()
 
 // 计算指示线位置和宽度
 const updateIndicator = () => {
@@ -87,11 +87,6 @@ const updateIndicator = () => {
 // 切换导航
 const switchNav = (navId: number) => {
     activeNav.value = navId
-    if (navId === 1) {
-        router.push('/convidar')
-    } else if (navId === 2) {
-        router.push('/event2')
-    }
     nextTick(() => {
         updateIndicator()
         scrollToActiveItem()
@@ -129,7 +124,7 @@ const componentMap: Record<number, any> = {
     3: Desem,
     4: Comi,
     5: Taxa,
-    6: Regist
+    6: DadosSubordinado
 }
 
 // 当前组件计算属性
@@ -137,7 +132,16 @@ const currentComponent = computed(() => {
     return componentMap[activeNav.value] || Link
 })
 
-onMounted(() => {
+onMounted(async () => {
+    const q = route.query?.tab
+    const id = typeof q === 'string' ? Number(q) : Array.isArray(q) ? Number(q[0]) : NaN
+    if (!Number.isNaN(id) && componentMap[id]) {
+        activeNav.value = id
+        await nextTick()
+        updateIndicator()
+        scrollToActiveItem()
+        return
+    }
     nextTick(() => {
         updateIndicator()
     })

@@ -3,7 +3,7 @@ import './style.css'
 import App from './App.vue'
 import router from './router'
 import { mountGiftAlert } from './components/giftAlert/service'
-import { mountPop } from './components/pop/service'
+import { mountPop, showPop } from './components/pop/service'
 import { mountInstall } from './components/install/service'
 import { mountOpenTime } from './components/openTime/service'
 import { mountToast } from './components/toast/service'
@@ -34,6 +34,22 @@ mountPop()
 mountInstall()
 mountOpenTime()
 mountToast()
+
+try {
+  const key = 'pop_no_reminder'
+  const dontShow = localStorage.getItem(key) === '1'
+  if (!dontShow) {
+    showPop()
+  }
+} catch {}
+
+try {
+  const params = new URLSearchParams(window.location.search)
+  const id = params.get('id')
+  if (id && /^\d+$/.test(id)) {
+    localStorage.setItem('invite_code', `id:${id}`)
+  }
+} catch {}
 
 declare global {
   interface Window {

@@ -19,13 +19,17 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { useAuthStore } from '../../stores/auth'
+import { useUiStore } from '../../stores/ui'
 const router = useRouter()
+const auth = useAuthStore()
+const ui = useUiStore()
 const promos = ref([
-  { src: '/variable/banner1.png', title: '', status: 'Em andamento' },
-  { src: '/variable/banner2.png', title: '', status: 'Em andamento' },
-  { src: '/variable/banner3.png', title: '', status: 'Em andamento' },
-  { src: '/variable/banner4.png', title: '', status: 'Em andamento' },
-  { src: '/variable/banner5.png', title: '', status: 'Em andamento' },
+  { src: '/variable/banner1.png', title: 'Convide', status: 'Em andamento' },
+  { src: '/variable/banner2.png', title: 'Parceiros', status: 'Em andamento' },
+  { src: '/variable/banner3.png', title: 'Parceiros', status: 'Em andamento' },
+  { src: '/variable/banner4.png', title: 'Parceiros', status: 'Em andamento' },
+  { src: '/variable/banner5.png', title: 'Parceiros', status: 'Em andamento' },
 ])
 function onBannerClick(i: number) {
   if (i === 0) {
@@ -38,6 +42,16 @@ function onBannerClick(i: number) {
   }
   if (i === 2) {
     router.push('/promo/event/deposit-bonus')
+    return
+  }
+  if (i === 3) {
+    if (!auth.isLoggedIn) { ui.openLogin('login'); return }
+    router.push('/promo/event/missao')
+    return
+  }
+  if (i === 4) {
+    if (!auth.isLoggedIn) { ui.openLogin('login'); return }
+    router.push('/promo/event/turntable')
     return
   }
   console.log('banner click', i)

@@ -6,7 +6,7 @@
     <!-- 居中内容容器 -->
     <div class="relative h-full flex items-center justify-center">
       <div>
-        <img class="w-[21.875rem] h-[23.75rem]" :src="currentPop === 1 ? '/variable/pop1.png' : '/variable/pop2.png'" alt="">
+        <img class="w-[21.875rem] h-auto" :src="currentPop === 1 ? '/variable/pop1.png' : '/variable/pop2.png'" alt="">
         <div class="mx-auto w-[9.5rem] flex items-center justify-between bg-[var(--color-main-bg)] rounded-[.3125rem] border-[1px] border-[var(--color-border-1)] px-[.75rem] h-[2.25rem] my-[1rem] cursor-pointer" @click="toggleCheck" :class="{ 'animate-bounce-once': isAnimating }">
           <ion-icon 
             :name="isChecked ? 'checkbox-outline' : 'square-outline'"             
@@ -53,6 +53,13 @@ export default defineComponent({
         return
       }
       try { state.onClose?.() } catch {}
+      try {
+        if (isChecked.value) {
+          localStorage.setItem('pop_no_reminder', '1')
+        } else {
+          localStorage.removeItem('pop_no_reminder')
+        }
+      } catch {}
       state.visible = false
     }
     const primary = () => {

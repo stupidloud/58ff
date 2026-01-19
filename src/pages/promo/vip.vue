@@ -3,30 +3,30 @@
         <div class="px-[.75rem] pt-[1.875rem]">
             <div
                 class="bg-[url('/static/profile/vipCardBg1.png')] bg-no-repeat bg-[bottom_0_left_0] bg-[length:100%_11.25rem] h-[11.875rem] w-full pt-[1.25rem] px-[.8125rem] pb-[.8125rem] mb-[1rem] relative">
-                <div
+                <!-- <div
                     class="w-[7.0938rem] h-[2.875rem] px-[.625rem] border border-white absolute top-[-.75rem] right-[.125rem] flex justify-center items-center text-[.75rem] text-white opacity-20 rounded-[100px]">
                     Coletar Tudo >
-                </div>
+                </div> -->
                 <div>
                     <div class="flex items-center">
                         <div class="flex items-center relative h-[1.5rem]">
                             <img class="w-[2.375rem] h-[2.375rem] relative z-2" src="/static/profile/vip1.png" alt="">
                             <div
                                 class="ml-[-1.25rem] bg-[url('/static/profile/vipTextSvg1.svg')] bg-no-repeat bg-center bg-[length:100%_100%] w-[4.5rem] h-[1.25rem] text-[.75rem] font-[600] text-white flex items-center justify-center indent-[.7em]">
-                                VIP 0
+                                VIP {{ currentVipLevel }}
                             </div>
                         </div>
                         <p class="ml-[.75rem] text-white/40 text-[.75rem] font-[700]">Nível Atual</p>
                     </div>
                     <div class="flex items-center mt-[2.375rem] justify-between">
                         <div class="releative w-[17.125rem] h-[.25rem] bg-white/20 rounded-[100px]">
-                            <div class="w-[20%] h-full bg-[var(--color-active)] rounded-[100px]"></div>
+                            <div class="h-full bg-[var(--color-active)] rounded-[100px]" :style="{ width: depositProgress + '%' }"></div>
                         </div>
                         <div class="flex items-center relative h-[1.5rem]">
                             <img class="w-[1.5rem] h-[1.5rem] relative z-2" src="/static/profile/vip2.png" alt="">
                             <div
                                 class="ml-[-1rem] bg-[url('/static/profile/vipTextSvg1.svg')] bg-no-repeat bg-center bg-[length:100%_100%] w-[3.125rem] h-[1.105rem] text-[.65rem] font-[600] text-white flex items-center justify-center indent-[.7em]">
-                                VIP 1
+                                VIP {{ nextVipLevelLabel }}
                             </div>
                         </div>
                     </div>
@@ -36,8 +36,8 @@
                         <p class="w-[3px] h-[3px] rounded-[100px] mr-[.625rem] bg-white/40"></p>
                         <p class="text-[.625rem] text-white/40"> Aposta necessária： </p>
                         <p class="text-[.625rem] text-white">
-                            <span class="text-[var(--color-warning)] font-[700]">0,00</span>
-                            (0,00/100,00)
+                            <span class="text-[var(--color-warning)] font-[700]">{{ formatAmount(remainingBet) }}</span>
+                            ({{ formatAmount(currentBet) }}/{{ formatAmount(nextTurnoverRequired) }})
                         </p>
                     </div>
                 </div>
@@ -79,39 +79,40 @@
         </div>
         <div class="px-[.75rem]">
             <div 
-            v-for="item in 35"
-            :class="{ 'bg-black/5': item % 2 === 0 }"
+            v-for="(level, idx) in vipLevels"
+            :key="level.level"
+            :class="{ 'bg-black/5': idx % 2 === 0 }"
             class="w-full h-[3.75rem] flex items-center">                
                 <div class="flex items-center relative h-[1.5rem] flex-1 justify-center">
-                    <img class="w-[2.375rem] h-[2.375rem] relative z-2" :src="`/static/promo/vip${item > 30 ? 30 : item}.png`" alt="">
+                    <img class="w-[2.375rem] h-[2.375rem] relative z-2" :src="`/static/promo/vip${level.level > 30 ? 30 : Number(level.level) + 1}.png`" alt="">
                     <div class="ml-[-1.25rem] bg-[url('/static/profile/vipTextSvg1.svg')] bg-no-repeat bg-center bg-[length:100%_100%] w-[4.5rem] h-[1.25rem] text-[.75rem] font-[600] text-white flex items-center justify-center indent-[.7em]">
-                        VIP {{ item }}
+                        VIP {{ level.level }}
                     </div>
                 </div>                 
                 <template v-if="activeNav === 1">
                      <p class="text-white/40 text-[.6rem] flex-1">
-                        {{ formatAmount(getAmount(item)) }}
+                        {{ formatAmount(level.turnover_requirement) }}
                     </p>
                     <p class="text-[var(--color-warning)] font-[600] text-[.6rem] flex-1">
-                        {{ formatAmount(getReward(item)) }}
+                        {{ formatAmount(level.level_up_bonus) }}
                     </p>
                 </template>                     
                  <template v-if="activeNav === 2">
                      <p class="text-white/40 text-[.6rem] flex-1">
-                        {{ formatAmount(getValida(item)) }}
+                        {{ formatAmountDailyRequirement(level) }}
                     </p>
                     <p class="text-[var(--color-warning)] font-[600] text-[.6rem] flex-1">
-                        {{ formatAmount(getBonus(item)) }}
+                        {{ formatAmount(level.daily_bonus) }}
                     </p>
                 </template>   
                  <template v-if="activeNav === 3">
                      <p class="text-[.6rem] flex-1 text-[var(--color-warning)] font-[600]">
-                        {{ formatAmount(getWeeklyBonus(item)) }}
+                        {{ formatAmount(level.weekly_bonus) }}
                     </p>
                 </template>   
                 <template v-if="activeNav === 4">
                      <p class="text-[.6rem] flex-1 text-[var(--color-warning)] font-[600]">
-                        {{ formatAmount(getMonthlyBonus(item)) }}
+                        {{ formatAmount(level.monthly_bonus) }}
                     </p>
                 </template>   
             </div>
@@ -152,7 +153,9 @@
     </div>
 </template>
 <script setup lang="ts">
-import { ref, onMounted, nextTick } from 'vue'
+import { ref, onMounted, nextTick, computed } from 'vue'
+import { vipApi, type VipLevel } from '../../services/api'
+import { useAuthStore } from '../../stores/auth'
 
 const navs = ref([
     {
@@ -178,6 +181,48 @@ const navContainer = ref<HTMLElement>()
 const navItems = ref<HTMLElement[]>([])
 const indicatorLeft = ref(0)
 const indicatorWidth = ref(0)
+const vipLevels = ref<VipLevel[]>([])
+const loading = ref(false)
+const error = ref<string | null>(null)
+const auth = useAuthStore()
+const currentVipLevel = computed(() => auth.user?.vip_level ?? 0)
+const nextLevelObj = computed(() => vipLevels.value.find(l => l.level === currentVipLevel.value + 1) || null)
+const currentDeposit = computed(() => auth.user?.total_deposit ?? 0)
+const currentBet = computed(() => auth.user?.total_bet ?? 0)
+const nextTurnoverRequired = computed(() => nextLevelObj.value?.turnover_requirement ?? 0)
+const remainingBet = computed(() => Math.max(0, nextTurnoverRequired.value - currentBet.value))
+const depositProgress = computed(() => {
+  const req = nextLevelObj.value?.deposit_requirement ?? 0
+  if (req <= 0) return 0
+  return Math.min(100, (currentDeposit.value / req) * 100)
+})
+const nextVipLevelLabel = computed(() => {
+  const next = currentVipLevel.value + 1
+  return next
+})
+const formatAmountDailyRequirement = (level: VipLevel) => {
+  // 若接口无每日有效投注要求，显示 “—”
+  return level.daily_deposit_rebate_rate ? `${level.daily_deposit_rebate_rate}%` : '—'
+}
+function formatAmount(num:number) {
+  return num.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+}
+async function fetchVipRequirements() {
+  loading.value = true
+  error.value = null
+  try {
+    const resp = await vipApi.getRequirements()
+    if (resp.code === 1) {
+      vipLevels.value = resp.data.levels || []
+    } else {
+      error.value = resp.msg || 'Falha ao obter dados VIP'
+    }
+  } catch (e:any) {
+    error.value = e?.message || 'Erro de rede'
+  } finally {
+    loading.value = false
+  }
+}
 
 // 计算指示线位置和宽度
 const updateIndicator = () => {
@@ -236,88 +281,12 @@ const scrollToActiveItem = () => {
 
 
 
-/*
-这一块是模拟数据，我不知道真实是什么样的，要接真实直接替换算法就行了，如果只是展示就这样就行=。=
-*/
-// 计算充值金额
-function getAmount(vip:number) {
-  if (vip === 0) return 0
-  if (vip <= 5) return 100 * Math.pow(3, vip - 1)
-  if (vip <= 10) return 1000 * Math.pow(2, vip - 2)
-  if (vip <= 20) return (vip - 10) * 2000000 + 1000000
-  if (vip <= 30) return 16000000 + (vip - 20) * 4000000
-  return 60000000 + (vip - 30) * 10000000
-}
-
-// 计算奖励
-function getReward(vip:number) {
-  if (vip === 0) return 0
-  if (vip <= 5) return Math.round(getAmount(vip) * 0.001 + vip)
-  if (vip <= 10) return Math.round(getAmount(vip) * 0.00035 + 10 * vip)
-  if (vip <= 20) return Math.round(355 + (vip - 10) * 200)
-  if (vip <= 30) return Math.round(2655 + (vip - 20) * 1000)
-  return Math.round(12555 + (vip - 30) * 5000 + Math.pow(vip - 30, 2) * 500)
-}
-
-
-function getValida(vip:number) {
-  if (vip === 0) return 0
-  if (vip <= 1) return 0
-  if (vip <= 2) return 3 * (vip - 1)
-  if (vip <= 5) return 6 + (vip - 4) * 3
-  if (vip <= 10) return 30 + (vip - 7) * 10
-  if (vip <= 15) return 70 + (vip - 10) * 50
-  if (vip <= 20) return 320 + (vip - 15) * 230
-  if (vip <= 25) return 1450 + (vip - 20) * 600
-  if (vip <= 30) return 4450 + (vip - 25) * 1500
-  return 12050 + (vip - 30) * 1800
-}
-
-function getBonus(vip:number) {
-  if (vip === 0) return 0
-  if (vip === 1) return 0.1
-  if (vip <= 5) return 0.2 + (vip - 2) * 0.3
-  if (vip <= 10) return 1 + (vip - 5) * 1.5
-  if (vip <= 15) return 7 + (vip - 10) * 8
-  if (vip <= 20) return 47 + (vip - 15) * 30
-  if (vip <= 25) return 197 + (vip - 20) * 80
-  if (vip <= 30) return 597 + (vip - 25) * 250
-  return 1847 + (vip - 30) * 700
-}
-
-function getWeeklyBonus(vip:number) {
-  if (vip === 0 || vip === 1) return 0
-  if (vip <= 2) return 1
-  if (vip <= 6) return 1 + (vip - 2) * 1        // VIP3~6 每级+1
-  if (vip <= 10) return 5 + (vip - 7) * 5       // VIP7~10 每级+5
-  if (vip <= 20) return 25 + (vip - 11) * 30    // VIP11~20 每级+30
-  if (vip <= 30) return 355 + (vip - 21) * 200  // VIP21~30 每级+200
-  return 2555 + (vip - 30) * 1000               // VIP31~35 每级+1000
-}
-function getMonthlyBonus(vip:number) {
-  if (vip === 0 || vip === 1) return 0
-  if (vip === 2) return 1
-  if (vip <= 4) return 1 + (vip - 2) * 2         // VIP3~4 每级+2
-  if (vip <= 6) return 5 + (vip - 4) * 4         // VIP5~6 每级+4
-  if (vip <= 7) return 12 + (vip - 6) * 3        // VIP7 每级+3
-  if (vip <= 10) return 15 + (vip - 7) * 11      // VIP8~10 每级+11
-  if (vip <= 15) return 49 + (vip - 10) * 100    // VIP11~15 每级+100
-  if (vip <= 20) return 600 + (vip - 15) * 200   // VIP16~20 每级+200
-  if (vip <= 25) return 1_800 + (vip - 20) * 300 // VIP21~25 每级+300
-  if (vip <= 30) return 3_000 + (vip - 25) * 800 // VIP26~30 每级+800
-  if (vip <= 34) return 7_000 + (vip - 30) * 2_000 // VIP31~34 每级+2,000
-  return 15_000 + (vip - 34) * 10_555             // VIP35 单级暴增到 25,555
-}
-// 千分位格式化（1,000,000）
-function formatAmount(num:number) {
-  return num.toLocaleString('pt-BR', { minimumFractionDigits: 2 })
-}
-
 onMounted(() => {
     // 使用setTimeout确保DOM完全渲染后再计算位置
     setTimeout(() => {
         updateIndicator()
     }, 100)
+    fetchVipRequirements()
 })
 </script>
 <style scoped></style>

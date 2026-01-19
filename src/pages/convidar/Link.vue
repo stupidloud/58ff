@@ -39,7 +39,14 @@ import QRCode from 'qrcode'
 
 const auth = useAuthStore()
 const inviteId = computed(() => auth.user?.id ?? 0)
-const siteOrigin = computed(() => (typeof window !== 'undefined' ? window.location.origin : ''))
+const siteOrigin = computed(() => {
+  try {
+    const fromEnv = (import.meta.env.VITE_SHARE_BASE_URL as string) || ''
+    return fromEnv || (typeof window !== 'undefined' ? window.location.origin : '')
+  } catch {
+    return 'https://dtfl.com'
+  }
+})
 const inviteUrl = ref('')
 const qrCodeSvg = ref('')
 const plats = ref([
@@ -142,8 +149,17 @@ const shareInviteUrl = async () => {
 }
 
 onMounted(() => {
-    const updateInviteUrl = () => {
-      inviteUrl.value = `${siteOrigin.value}/?pid=${inviteId.value}`
+  const updateInviteUrl = () => {
+      const isVirtual = auth.user?.player_type === 'virtual'
+      if (isVirtual) {
+        inviteUrl.value = ''
+        return
+      }
+      const id = inviteId.value
+      const oldFormat = true
+      inviteUrl.value = oldFormat
+        ? `${siteOrigin.value}/?id=${id}&currency=BRL&type=2`
+        : `${siteOrigin.value}/${id}`
     }
     updateInviteUrl()
     generateQRCode()

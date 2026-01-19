@@ -22,7 +22,8 @@ export const API_ENDPOINTS = {
     register: '/auth/register',
     logout: '/auth/logout',
     profile: '/auth/profile',
-    refresh: '/auth/refresh'
+    refresh: '/auth/refresh',
+    changePassword: '/auth/change-password'
   },
   
   // 游戏相关
@@ -78,6 +79,17 @@ export const API_ENDPOINTS = {
 
   // 公告相关
   announcements: '/announcements'
+  ,
+  // 每日充值签到
+  dailyCheckin: {
+    info: '/daily-checkin/info',
+    claim: '/daily-checkin/claim'
+  },
+  // 轮盘相关
+  roulette: {
+    info: '/roulette/info',
+    spin: '/roulette/spin'
+  }
 } as const
 
 // 请求超时时间（毫秒）

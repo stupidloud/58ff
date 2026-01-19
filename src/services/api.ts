@@ -21,6 +21,7 @@ export interface User {
   username: string
   phone_number: string
   balance: number
+  bet_points: number
   vip_level: number
   player_type: string
   total_deposit: number
@@ -64,6 +65,12 @@ export const authApi = {
     httpClient.post<LoginResponse>(API_ENDPOINTS.auth.login, {
       phone_number,
       password
+    }),
+  // 修改登录密码
+  changePassword: (old_password: string, new_password: string) =>
+    httpClient.post(API_ENDPOINTS.auth.changePassword, {
+      old_password,
+      new_password
     }),
 
   // 注册
@@ -284,8 +291,12 @@ export interface VipLevel {
 export interface SiteInfo {
   site_name: string
   valid_treasure_box_threshold: number
+  treasure_box_bet_requirement?: number
   if_show_cert: number
   vapid_public_key?: string // VAPID 公钥（用于 Web Push）
+  min_deposit_amount?: number
+  max_deposit_amount?: number
+  init_gift?: number
 }
 
 // 下注记录数据类型
@@ -451,6 +462,50 @@ export const announcementApi = {
     httpClient.get<{ announcements: Announcement[] }>(API_ENDPOINTS.announcements)
 }
 
+// 每日充值签到数据类型
+export interface DailyBonusItem {
+  day: number
+  bonus: number
+}
+export interface DailyCheckinInfo {
+  daily_bonuses: DailyBonusItem[]
+  min_deposit_requirement: number
+}
+export interface DailyCheckinClaimResponse {
+  reward_amount: number
+  balance_after: number
+}
+export const dailyCheckinApi = {
+  info: () =>
+    httpClient.get<DailyCheckinInfo>(API_ENDPOINTS.dailyCheckin.info),
+  claim: () =>
+    httpClient.post<DailyCheckinClaimResponse>(API_ENDPOINTS.dailyCheckin.claim)
+}
+
+// 轮盘相关API
+export interface RouletteConfig {
+  silver: { cost: number; prizes: number[] }
+  gold: { cost: number; prizes: number[] }
+  diamond: { cost: number; prizes: number[] }
+}
+export interface RouletteInfoResponse {
+  roulette_config: RouletteConfig
+}
+export interface SpinResponse {
+  type: 'silver' | 'gold' | 'diamond'
+  cost: number
+  prize_amount: number
+  prize_index: number
+  balance_after: number
+  bet_points_after: number
+}
+export const rouletteApi = {
+  info: () =>
+    httpClient.get<{ roulette_config: RouletteConfig }>(API_ENDPOINTS.roulette.info),
+  spin: (type: 'silver' | 'gold' | 'diamond') =>
+    httpClient.post<SpinResponse>(API_ENDPOINTS.roulette.spin, { type })
+}
+
 // 站点相关API
 export const siteApi = {
   // 获取站点信息
@@ -489,5 +544,3 @@ export const treasureBoxApi = {
       treasure_box_id
     })
 }
-
-

@@ -67,7 +67,7 @@
         </div>
         <div class="py-[1rem] px-[.75rem] mt-[.75rem]">
           <div :style="{ backgroundImage: `url(${vipBgPath})`, backgroundSize: '100% 11.25rem', backgroundRepeat: 'no-repeat', backgroundPosition: 'bottom 0 left 0' }" class="h-[11.875rem] w-full pt-[1.25rem] px-[.8125rem] pb-[.8125rem] mb-[1rem] relative">
-            <div class="w-[7.0938rem] h-[2.875rem] px-[.625rem] bg-[url('/static/profile/vipDetail1.png')] bg-no-repeat bg-cover bg-center absolute top-[-.75rem] right-[.125rem] flex justify-center items-center text-[.75rem] text-white">
+            <div class="w-[7.0938rem] h-[2.875rem] px-[.625rem] bg-[url('/static/profile/vipDetail1.png')] bg-no-repeat bg-cover bg-center absolute top-[-.75rem] right-[.125rem] flex justify-center items-center text-[.75rem] text-white cursor-pointer" @click="router.push({ path: '/promo', query: { tab: 3 } })">
               Detalhes VIP >
             </div>
             <div>
@@ -147,7 +147,7 @@
     </div>
 </template>
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { useAuthStore } from '../stores/auth'
 import WithdrawPassAlert from './password/WithdrawPassAlert.vue'
 import { useRouter } from 'vue-router'
@@ -176,26 +176,33 @@ const handleNavClick = async (item: NavItem) => {
     return
   }
   if (item.routerName) {
-    router.push(item.routerName)
+    if (item.routerName === '/promo' && item.label === 'Código de Resgate') {
+      router.push({ path: '/promo', query: { tab: 4 } })
+    } else {
+      router.push(item.routerName)
+    }
   }
 }
 const navs = ref([
   {
     icon: 'detail.svg',
-    label: 'Relatórios'
+    label: 'Relatórios',
+    routerName: '/convidar'
   },
   {
     icon: 'convidar.svg',
     label: 'Convidar',
-    routerName: 'convidar'
+    routerName: '/invite'
   },
   {
     icon: 'resgate.svg',
-    label: 'Código de Resgate'
+    label: 'Código de Resgate',
+    routerName: '/promo'
   },
   {
     icon: 'security.svg',
-    label: 'Centro de Segurança'
+    label: 'Centro de Segurança',
+    routerName: '/security'
   },
   {
     icon: 'logout.svg',
@@ -331,6 +338,22 @@ animatedBalance.value = auth.balance
     }
   } catch {}
 })()
+
+onMounted(async () => {
+  if (auth.isLoggedIn) {
+    try {
+      await auth.fetchUserProfile()
+    } catch {}
+    try {
+      const res = await playerApi.getBalance()
+      if (res.code === 1) {
+        targetBalance.value = res.data.balance
+        await auth.updateBalance(res.data.balance)
+        animatedBalance.value = res.data.balance
+      }
+    } catch {}
+  }
+})
 </script>
 <style scoped>
 

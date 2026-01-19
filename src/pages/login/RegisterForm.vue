@@ -8,9 +8,35 @@
       </p>
     </div>
 
-    <!-- 手机号输入（巴西） -->
+    <!-- 用户名 -->
     <div
       class="flex items-center justify-between rounded-[.375rem] h-[2.872rem] px-[.75rem] bg-[var(--color-tabbar-2)] border"
+      :class="usernameBorderClass"
+    >
+      <div class="flex items-center w-full">
+        <ion-icon name="person-circle-outline" class="text-white/40 text-[1.2rem] mr-[.5rem]"></ion-icon>
+        <input
+          v-model="username"
+          maxlength="46"
+          placeholder="Nome de Usuário"
+          autocomplete="username"
+          name="username"
+          class="flex-1 bg-transparent outline-none text-white text-[.85rem]"
+        />
+        <div
+          v-if="username.length"
+          class="w-[1.2rem] h-[1.2rem] flex items-center justify-center rounded-[100px] bg-white/20 cursor-pointer ml-auto"
+          @click="username = ''"
+          aria-label="Limpar usuário"
+        >
+          <ion-icon name="close-sharp" class="text-white text-[1rem]"></ion-icon>
+        </div>
+      </div>
+    </div>
+
+    <!-- 手机号输入（巴西） -->
+    <div
+      class="mt-[.75rem] flex items-center justify-between rounded-[.375rem] h-[2.872rem] px-[.75rem] bg-[var(--color-tabbar-2)] border"
       :class="phoneBorderClass"
     >
       <div class="flex items-center w-full">
@@ -20,7 +46,7 @@
         <input
           v-model="phone"
           inputmode="numeric"
-          maxlength="11"
+          maxlength="15"
           placeholder="Número"
           autocomplete="username"
           name="username"
@@ -42,7 +68,7 @@
       class="text-[#E84F46] mt-[.5rem] font-[400] text-[.75rem] flex items-center gap-[.375rem]"
     >
         <ion-icon name="alert-circle-outline"></ion-icon>
-      <span>Número de telefone inválido</span>
+      <span>O número de telefone deve conter 11 dígitos.</span>
     </div>
 
     <!-- 密码输入（6-12 个字符） -->
@@ -132,6 +158,47 @@
       <span>As senhas não coincidem</span>
     </div>
 
+    <!-- 邀请码 -->
+    <div
+      class="mt-[.75rem] flex items-center justify-between rounded-[.375rem] h-[2.872rem] px-[.75rem] bg-[var(--color-tabbar-2)] border"
+      :class="inviteBorderClass"
+    >
+      <div class="flex items-center w-full">
+        <ion-icon name="pricetag-outline" class="text-white/40 text-[1.2rem] mr-[.5rem]"></ion-icon>
+        <input
+          v-model="inviteCode"
+          placeholder="Código de Convite (id:123)"
+          autocomplete="off"
+          class="flex-1 bg-transparent outline-none text-white text-[.85rem] placeholder:text-white/30"
+        />
+        <div
+          v-if="inviteCode.length"
+          class="w-[1.2rem] h-[1.2rem] flex items-center justify-center rounded-[100px] bg-white/20 cursor-pointer ml-auto"
+          @click="inviteCode = ''"
+          aria-label="Limpar código"
+        >
+          <ion-icon name="close-sharp" class="text-white text-[1rem]"></ion-icon>
+        </div>
+      </div>
+    </div>
+
+    <!-- 同意协议 -->
+    <div class="flex items-center justify-between mt-[1rem]">
+      <label class="flex items-center gap-[.5rem] cursor-pointer select-none" @click="agreeTerms = !agreeTerms">
+        <div
+          class="w-[.8rem] h-[.8rem] flex items-center justify-center rounded-[.1rem] transition-colors duration-300 ease-out border"
+          :class="agreeTerms ? 'bg-[var(--color-active)] border-[var(--color-active)]' : 'bg-white border-[var(--color-active)]'"
+          role="checkbox"
+          :aria-checked="agreeTerms"
+        >
+          <Transition name="check">
+            <ion-icon v-if="agreeTerms" name="checkmark" class="text-white text-[.6rem]"></ion-icon>
+          </Transition>
+        </div>
+        <span class="text-white/60 text-[.75rem]">Concordo com o contrato do usuário</span>
+      </label>
+    </div>
+
     <!-- 记住密码 + 忘记密码 -->
     <div class="flex items-center justify-between mt-[1rem]">
       <label class="flex items-center gap-[.5rem] cursor-pointer select-none" @click="remember = !remember">
@@ -146,8 +213,7 @@
           </Transition>
         </div>
         <span class="text-white/60 text-[.75rem]">Lembrar Senha</span>
-      </label>
-      <span type="button" class="text-white/60 text-[.75rem]">Esqueceu a senha?</span>
+      </label>      
     </div>
 
     <!-- 提交按钮 -->
@@ -168,9 +234,14 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
+import { useRoute } from 'vue-router'
+import { useAuthStore } from '../../stores/auth'
+import { showToast } from '../../components/toast/service'
 
 const emit = defineEmits<{ (e: 'switch-form'): void }>()
+const route = useRoute()
+const auth = useAuthStore()
 
 const phone = ref('')
 
@@ -182,28 +253,31 @@ const loading = ref(false)
 // 新增：确认密码状态
 const passwordConfirm = ref('')
 const showPwdConfirm = ref(false)
+const username = ref('')
+const inviteCode = ref('')
+const agreeTerms = ref(true)
 
 const sanitize = (s: string) => s.replace(/\D/g, '')
+const maskBrazilPhone = (digits: string) => {
+  const d = digits
+  const dd = d.slice(0, 2)
+  const rest = d.slice(2)
+  if (d.length <= 2) return `(${dd}`
+  if (d.length <= 6) return `(${dd}) ${rest}`
+  if (d.length <= 10) return `(${dd}) ${rest.slice(0, 4)}-${rest.slice(4)}`
+  return `(${dd}) ${rest.slice(0, 5)}-${rest.slice(5)}`
+}
 const onPhoneInput = (e: Event) => {
   const t = e.target as HTMLInputElement
-  phone.value = sanitize(t.value).slice(0, 11)
+  const digits = sanitize(t.value).slice(0, 11)
+  phone.value = maskBrazilPhone(digits)
 }
 const clearPhone = () => {
   phone.value = ''
 }
 
-// 巴西手机号：两个输入合并为一个 phone（包含 DDD + Número）
-const validDDD = computed(() => {
-  const digits = sanitize(phone.value)
-  const d = digits.slice(0, 2)
-  return /^[1-9]\d$/.test(d) && Number(d) >= 11
-})
-const validLine = computed(() => {
-  const digits = sanitize(phone.value)
-  const l = digits.slice(2)
-  return /^9\d{8}$/.test(l) || /^[2-5]\d{7}$/.test(l)
-})
-const validPhone = computed(() => validDDD.value && validLine.value)
+// 巴西手机号：只验证总位数为11（与旧项目一致）
+const validPhone = computed(() => sanitize(phone.value).length === 11)
 
 // 密码 6-12 个字符
 const validPassword = computed(() => password.value.length >= 6 && password.value.length <= 12)
@@ -228,12 +302,87 @@ const passwordConfirmBorderClass = computed(() => {
   return validPasswordConfirm.value ? 'border-[#61D669]' : 'border-[#E84F46]'
 })
 
+const validUsername = computed(() => username.value.trim().length > 0 && username.value.trim().length <= 46)
+const hasUsernameInput = computed(() => username.value.length > 0)
+const usernameBorderClass = computed(() => {
+  if (!hasUsernameInput.value) return 'border-[var(--color-border-1)]'
+  return validUsername.value ? 'border-[#61D669]' : 'border-[#E84F46]'
+})
+const hasInviteInput = computed(() => inviteCode.value.length > 0)
+const inviteBorderClass = computed(() => {
+  if (!hasInviteInput.value) return 'border-[var(--color-border-1)]'
+  return inviteCode.value.includes(':') ? 'border-[#61D669]' : 'border-[#E84F46]'
+})
+
+const getInviteCodeFromUrl = () => {
+  try {
+    const q = route.query
+    const idParam = typeof q.id === 'string' ? q.id : Array.isArray(q.id) ? q.id[0] : ''
+    if (idParam && /^\d+$/.test(idParam)) return `id:${idParam}`
+    const pathLast = (typeof window !== 'undefined' ? window.location.pathname.split('/').filter(Boolean).pop() : '') || ''
+    if (pathLast && /^\d+$/.test(pathLast)) return `id:${pathLast}`
+    const stored = localStorage.getItem('invite_code') || ''
+    return stored
+  } catch {
+    return ''
+  }
+}
+
+onMounted(() => {
+  const code = getInviteCodeFromUrl()
+  if (code) {
+    inviteCode.value = code
+    try { localStorage.setItem('invite_code', code) } catch {}
+  }
+  const rememberedUsername = localStorage.getItem('remembered_username')
+  const rememberedPassword = localStorage.getItem('remembered_password')
+  if (rememberedUsername) username.value = rememberedUsername
+  if (rememberedPassword) password.value = rememberedPassword
+})
+
+const translateRegisterError = (code?: number, defaultMsg?: string) => {
+  const map: Record<number, string> = {
+    1001: 'Formato do código de convite inválido',
+    1002: 'Nome de usuário já existe',
+    1003: 'Número de celular já registrado',
+    1004: 'Agente não existe',
+    1005: 'Código de convite inválido',
+    1006: 'Falha no registro',
+  }
+  if (!code) return defaultMsg || 'Falha no registro'
+  return map[code] || (defaultMsg || 'Falha no registro')
+}
+
 const submit = async () => {
-  if (!validPhone.value || !validPassword.value || !validPasswordConfirm.value || loading.value) return
+  if (loading.value) return
+  if (!validUsername.value) { showToast('Por favor, insira o nome de usuário'); return }
+  if (!validPhone.value) { showToast('Número de telefone inválido'); return }
+  if (!validPassword.value) { showToast('Senha inválida (6–12 caracteres)'); return }
+  if (!validPasswordConfirm.value) { showToast('As senhas não coincidem'); return }
+  if (!inviteCode.value.trim()) { showToast('Por favor, insira o código de convite'); return }
+  if (!inviteCode.value.includes(':')) { showToast('Formato do código de convite inválido'); return }
+  if (!agreeTerms.value) { showToast('Por favor, concorde com o contrato do usuário'); return }
   loading.value = true
   try {
-    await new Promise((r) => setTimeout(r, 1200))
-    // TODO: 接入注册接口
+    const payload = {
+      username: username.value.trim(),
+      phone_number: sanitize(phone.value),
+      password: password.value,
+      invite_code: inviteCode.value.trim(),
+    }
+    const res = await auth.register(payload)
+    if ((res as any)?.success) {
+      try {
+        localStorage.setItem('remembered_username', username.value.trim())
+        localStorage.setItem('remembered_password', password.value)
+      } catch {}
+      showToast('Registro bem-sucedido')
+    } else {
+      const msg = translateRegisterError((res as any)?.errorCode, (res as any)?.error || 'Falha no registro')
+      showToast(msg)
+    }
+  } catch (e: any) {
+    showToast(e?.message || 'Falha no registro, tente novamente')
   } finally {
     loading.value = false
   }

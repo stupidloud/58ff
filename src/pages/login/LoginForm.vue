@@ -8,41 +8,29 @@
       </p>
     </div>
 
-    <!-- 手机号输入（巴西） -->
+    <!-- 账号输入（支持用户名或手机号） -->
     <div
       class="flex items-center justify-between rounded-[.375rem] h-[2.872rem] px-[.75rem] bg-[var(--color-tabbar-2)] border"
-      :class="phoneBorderClass"
+      :class="accountBorderClass"
     >
       <div class="flex items-center w-full">
-        <img class="mr-[.25rem] w-[1.25rem] h-[1.25rem] rounded-[100px]" src="/static/br.svg" alt="">
-        <span class="text-white text-[.875rem]">+55</span>
-        <span class="mx-[.8rem] w-[.0625rem] h-[1.25rem] bg-white/20"></span>
         <input
-          v-model="phone"
-          inputmode="numeric"
-          maxlength="11"
-          placeholder="Número"
+          v-model="account"
+          maxlength="32"
+          placeholder="Usuário ou número"
           autocomplete="username"
           name="username"
-          class="flex-1 bg-transparent outline-none text-white text-[.85rem]"
-          @input="onPhoneInput"
+          class="flex-1 bg-transparent outline-none text-white text-[.85rem] placeholder:text-white/30"
         />
         <div
-          v-if="phone.length"
+          v-if="account.length"
           class="w-[1.2rem] h-[1.2rem] flex items-center justify-center rounded-[100px] bg-white/20 cursor-pointer ml-auto"
-          @click="clearPhone"
-          aria-label="Limpar telefone"
+          @click="clearAccount"
+          aria-label="Limpar usuário"
         >
           <ion-icon name="close-sharp" class="text-white text-[1rem]"></ion-icon>
         </div>
       </div>
-    </div>
-    <div
-      v-if="hasPhoneInput && !validPhone"
-      class="text-[#E84F46] mt-[.5rem] font-[400] text-[.75rem] flex items-center gap-[.375rem]"
-    >
-        <ion-icon name="alert-circle-outline"></ion-icon>
-      <span>Número de telefone inválido</span>
     </div>
 
     <!-- 密码输入（6-12 个字符） -->
@@ -109,8 +97,8 @@
     <button
       type="submit"
       class="mt-[1.5rem] w-full h-[2.875rem] rounded-[.375rem] font-[700] text-[.875rem] flex items-center justify-center !bg-[var(--color-active)]"
-      :class="[ 'text-white transition-all duration-200 ease-out', (loading || !validPhone || !validPassword) ? 'btn-dim cursor-not-allowed' : '' ]"
-      :disabled="!validPhone || !validPassword || loading"
+      :class="[ 'text-white transition-all duration-200 ease-out', (loading || !hasAccountInput || !validPassword) ? 'btn-dim cursor-not-allowed' : '' ]"
+      :disabled="!hasAccountInput || !validPassword || loading"
     >
       <template v-if="loading">
         Carregando<span class="loading-dots"><span>.</span><span>.</span><span>.</span></span>
@@ -130,7 +118,7 @@ import { showToast } from '../../components/toast/service'
 
 const emit = defineEmits<{ (e: 'switch-form'): void }>()
 
-const phone = ref('')
+const account = ref('')
 
 const password = ref('')
 const showPwd = ref(false)
@@ -139,25 +127,19 @@ const loading = ref(false)
 const auth = useAuthStore()
 const ui = useUiStore()
 
-const sanitize = (s: string) => s.replace(/\D/g, '')
-const onPhoneInput = (e: Event) => {
-  const t = e.target as HTMLInputElement
-  phone.value = sanitize(t.value).slice(0, 11)
-}
-const clearPhone = () => {
-  phone.value = ''
+const clearAccount = () => {
+  account.value = ''
 }
 
-const validPhone = computed(() => sanitize(phone.value).length > 0)
+const hasAccountInput = computed(() => account.value.trim().length > 0)
 
 // 密码 6-12 个字符
 const validPassword = computed(() => password.value.length >= 6 && password.value.length <= 12)
 
 // 边框颜色与输入状态（实时）
-const hasPhoneInput = computed(() => sanitize(phone.value).length > 0)
-const phoneBorderClass = computed(() => {
-  if (!hasPhoneInput.value) return 'border-[var(--color-border-1)]'
-  return validPhone.value ? 'border-[#61D669]' : 'border-[#E84F46]'
+const accountBorderClass = computed(() => {
+  if (!hasAccountInput.value) return 'border-[var(--color-border-1)]'
+  return 'border-[#61D669]'
 })
 const hasPasswordInput = computed(() => password.value.length > 0)
 const passwordBorderClass = computed(() => {
@@ -166,10 +148,10 @@ const passwordBorderClass = computed(() => {
 })
 
 const submit = async () => {
-  if (!validPhone.value || !validPassword.value || loading.value) return
+  if (!hasAccountInput.value || !validPassword.value || loading.value) return
   loading.value = true
   try {
-    const res = await auth.login({ phone_number: sanitize(phone.value), password: password.value })
+    const res = await auth.login({ phone_number: account.value.trim(), password: password.value })
     if (res && res.success) {
       ui.closeLogin()
     } else {
