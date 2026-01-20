@@ -4,7 +4,7 @@
 
 
     <!-- 正常tabbar容器 -->
-    <div class="h-[3.5rem] flex items-center justify-around bg-[var(--color-bg-aside)]" style="
+    <div class="h-[3.5rem] flex items-center justify-around !bg-[var(--color-bg-aside)]" style="
       -webkit-mask: url('/static/tabbar.svg') no-repeat center / contain;
       mask: url('/static/tabbar.svg') no-repeat center / contain;      
   ">
@@ -24,7 +24,7 @@
     <div class="absolute top-[0] left-1/2 -translate-x-1/2 h-[3.5rem]">
       <div
         @click="setActiveTab('convidar')"
-        class="relative translate-y-[-1.8rem] w-[3.125rem] h-[3.125rem] border-[.1rem] border-[var(--color-active)] bg-[var(--color-bg-aside)] rounded-[50%] flex items-center justify-center">
+        class="relative translate-y-[-1.8rem] w-[3.125rem] h-[3.125rem] border-[.1rem] border-[var(--color-active)] !bg-[var(--color-bg-aside)] rounded-[50%] flex items-center justify-center">
         <img class="tabbarlight absolute top-0 right-0 w-[3.125rem] h-[3.125rem]" src="/static/tabbar3_light.png" alt="">
         <img class="absolute mx-auto w-[2.1875rem] h-auto" :class="{ 'tab-bounce': activeTab === 'convidar' }" src="/static/tabbar3.png" alt=""></img>
       </div>

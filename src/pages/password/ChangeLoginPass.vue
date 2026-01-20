@@ -7,19 +7,19 @@
       <input
         v-model="oldPassword"
         type="password"
-        class="w-full h-[2.75rem] bg-[var(--color-bg-aside)] border border-white/10 rounded-[.375rem] px-[.75rem] text-white text-[.9rem] focus:border-[var(--color-active)] focus:outline-none"
+        class="w-full h-[2.75rem] !bg-[var(--color-bg-aside)] border border-white/10 rounded-[.375rem] px-[.75rem] text-white text-[.9rem] focus:border-[var(--color-active)] focus:outline-none"
       />
       <p class="text-white/40 text-[.75rem] text-left mt-[1rem] mb-[.5rem]">Nova Senha</p>
       <input
         v-model="newPassword"
         type="password"
-        class="w-full h-[2.75rem] bg-[var(--color-bg-aside)] border border-white/10 rounded-[.375rem] px-[.75rem] text-white text-[.9rem] focus:border-[var(--color-active)] focus:outline-none"
+        class="w-full h-[2.75rem] !bg-[var(--color-bg-aside)] border border-white/10 rounded-[.375rem] px-[.75rem] text-white text-[.9rem] focus:border-[var(--color-active)] focus:outline-none"
       />
       <p class="text-white/40 text-[.75rem] text-left mt-[1rem] mb-[.5rem]">Confirmar Nova Senha</p>
       <input
         v-model="confirmPassword"
         type="password"
-        class="w-full h-[2.75rem] bg-[var(--color-bg-aside)] border border-white/10 rounded-[.375rem] px-[.75rem] text-white text-[.9rem] focus:border-[var(--color-active)] focus:outline-none"
+        class="w-full h-[2.75rem] !bg-[var(--color-bg-aside)] border border-white/10 rounded-[.375rem] px-[.75rem] text-white text-[.9rem] focus:border-[var(--color-active)] focus:outline-none"
       />
       <p class="text-[var(--color-warning)] text-[.65rem] font-[500] mt-[.75rem]">
         A senha deve ter pelo menos 6 caracteres

@@ -6,7 +6,7 @@
                 <div class="sidebar-fixed-top">
                     <div class="flex items-center justify-between pt-[.75rem]">
                         <div @click="close"
-                            class="w-[2rem] h-[2rem] flex items-center justify-center rounded-[.625rem] bg-[var(--color-bg-aside)]">
+                            class="w-[2rem] h-[2rem] flex items-center justify-center rounded-[.625rem] !bg-[var(--color-bg-aside)]">
                             <ion-icon class="text-[1.2rem] cursor-pointer text-white font-[700]"
                                 name="close-outline"></ion-icon>
                         </div>
@@ -55,7 +55,7 @@
                     </div>
                 </div>
 
-                <div class="flex items-center relative overflow-hidden bg-[var(--color-bg-aside)] w-full px-[.875rem] py-[.75rem] mt-[.9375rem] border border-[var(--color-border-1)] rounded-[.625rem] cursor-pointer"
+                <div class="flex items-center relative overflow-hidden !bg-[var(--color-bg-aside)] w-full px-[.875rem] py-[.75rem] mt-[.9375rem] border border-[var(--color-border-1)] rounded-[.625rem] cursor-pointer"
                     @click="providerOpen = !providerOpen">
                     <img class="w-[.9rem] h-auto" src="/static/sidebar/crown.svg" alt="">
                     <p class="text-white ml-[.4375rem] text-[.875rem] font-[600]">Provedor de jogos</p>
@@ -75,7 +75,7 @@
                 <div
                     class="flex flex-wrap gap-[.75rem] py-[1.4rem] border-y border-[var(--color-border-2)] mt-[1.375rem]">
                     <div v-for="item in icos"
-                        class="flex items-center flex-[calc(50%_-_.375rem)] h-[2.125rem] px-[.625rem] py-[.3125rem] gap-[.375rem] bg-[var(--color-bg-aside)] rounded-[.625rem]">
+                        class="flex items-center flex-[calc(50%_-_.375rem)] h-[2.125rem] px-[.625rem] py-[.3125rem] gap-[.375rem] !bg-[var(--color-bg-aside)] rounded-[.625rem]">
                         <img class="w-[1.5rem] h-auto" :src="'/static/sidebar/' + item.ico" alt="">
                         <span class="text-white text-[.75rem] font-[600]">{{ item.label }}</span>
                     </div>

@@ -27,7 +27,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="(bonus, index) in bonuses" :key="index" class="h-[2.25rem]" :class="index % 2 === 0 ? 'bg-[var(--color-bg-main)]' : 'bg-[var(--color-bg-aside)]'">
+              <tr v-for="(bonus, index) in bonuses" :key="index" class="h-[2.25rem]" :class="index % 2 === 0 ? 'bg-[var(--color-bg-main)]' : '!bg-[var(--color-bg-aside)]'">
                 <td class="text-left px-[.75rem] text-white text-[.7rem]">{{ bonus.day }}</td>
                 <td class="text-right px-[.75rem] text-white text-[.7rem]">{{ bonus.amount }}</td>
               </tr>

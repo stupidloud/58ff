@@ -1,13 +1,13 @@
 <template>
   <div class="w-full">
     <div class="flex items-center gap-[.5rem] mb-[.75rem]">
-      <input v-model="searchValue" class="flex-1 min-w-0 h-[2rem] rounded-[.375rem] px-[.5rem] bg-[var(--color-bg-aside)] border border-[var(--color-border-1)] text-white text-[.8rem]" placeholder="ID do Membro">
-      <div class="relative overflow-hidden h-[2rem] rounded-[.375rem] px-[.5rem] bg-[var(--color-bg-aside)] border border-[var(--color-border-1)] text-white text-[.8rem] flex items-center justify-between cursor-pointer select-none" @click="openStartDatePicker">
+      <input v-model="searchValue" class="flex-1 min-w-0 h-[2rem] rounded-[.375rem] px-[.5rem] !bg-[var(--color-bg-aside)] border border-[var(--color-border-1)] text-white text-[.8rem]" placeholder="ID do Membro">
+      <div class="relative overflow-hidden h-[2rem] rounded-[.375rem] px-[.5rem] !bg-[var(--color-bg-aside)] border border-[var(--color-border-1)] text-white text-[.8rem] flex items-center justify-between cursor-pointer select-none" @click="openStartDatePicker">
         <span class="mr-[.2rem]">{{ startDate || 'Data inicial' }}</span>
         <ion-icon class="text-white/70 text-[1rem]" name="calendar-outline"></ion-icon>
         <input ref="startDateRef" v-model="startDate" type="date" class="absolute left-0 top-0 w-0 h-0 opacity-0 pointer-events-none" tabindex="-1">
       </div>
-      <div class="relative overflow-hidden h-[2rem] rounded-[.375rem] px-[.5rem] bg-[var(--color-bg-aside)] border border-[var(--color-border-1)] text-white text-[.8rem] flex items-center justify-between cursor-pointer select-none" @click="openEndDatePicker">
+      <div class="relative overflow-hidden h-[2rem] rounded-[.375rem] px-[.5rem] !bg-[var(--color-bg-aside)] border border-[var(--color-border-1)] text-white text-[.8rem] flex items-center justify-between cursor-pointer select-none" @click="openEndDatePicker">
         <span class="mr-[.2rem]">{{ endDate || 'Data final' }}</span>
         <ion-icon class="text-white/70 text-[1rem]" name="calendar-outline"></ion-icon>
         <input ref="endDateRef" v-model="endDate" type="date" class="absolute left-0 top-0 w-0 h-0 opacity-0 pointer-events-none" tabindex="-1">
@@ -18,7 +18,7 @@
     <div v-else-if="error" class="text-center py-[1rem] text-red-500">{{ error }}</div>
 
     <div v-else>
-      <div v-for="(item, index) in filteredData" :key="item.id" class="p-[.5rem] rounded-[.5rem] mb-[.5rem]" :class="index % 2 === 0 ? 'bg-[var(--color-bg-aside-2)]' : 'bg-[var(--color-bg-aside)]'">
+      <div v-for="(item, index) in filteredData" :key="item.id" class="p-[.5rem] rounded-[.5rem] mb-[.5rem]" :class="index % 2 === 0 ? 'bg-[var(--color-bg-aside-2)]' : '!bg-[var(--color-bg-aside)]'">
         <div class="flex items-center justify-between">
           <div class="flex items-center">
             <span class="text-white mr-[.5rem] text-[.85rem]">ID {{ item.memberId }}</span>

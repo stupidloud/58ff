@@ -23,6 +23,7 @@ const router = createRouter({
     { path: '/promo/event/turntable', name: 'promo-event-turntable', component: () => import('../pages/promo/event/Turntable.vue') },
     { path: '/login', name: 'login', component: () => import('../pages/login/Login.vue') },
     { path: '/security', name: 'security', component: () => import('../pages/security/Security.vue') },
+    { path: '/slot', name: 'slot', component: () => import('../pages/slotPage.vue') },
   ],
 })
 

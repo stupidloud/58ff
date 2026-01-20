@@ -133,7 +133,8 @@
         </p> -->
       </div>
       <div
-        class="ml-[.625rem] w-[2.5rem] h-[2.5rem] rounded-[.875rem] flex items-center text-white justify-center border border-[#4a3695] bg-[#372380]">
+        class="ml-[.625rem] w-[2.5rem] h-[2.5rem] rounded-[.875rem] flex items-center text-white justify-center border border-[#4a3695] bg-[#372380] cursor-pointer"
+        @click="router.push('/slot')">
         <ion-icon name="search-outline" class="text-white text-[2rem]"></ion-icon>
       </div>
     </div>

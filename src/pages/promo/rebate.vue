@@ -16,7 +16,7 @@
         </div>
         <div class="flex gap-[.75rem]">
             <div class="w-[4.1rem]">
-                <div class="mb-[.625rem] w-full py-[.125rem] bg-[var(--color-bg-aside)] rounded-[.315rem]">
+                <div class="mb-[.625rem] w-full py-[.125rem] !bg-[var(--color-bg-aside)] rounded-[.315rem]">
                     <div class="w-[2.25rem] h-[2.25rem] bg-[var(--color-active)] mx-auto" style="-webkit-mask:url('/static/promo/seven.svg') no-repeat center/contain;mask:url('/static/promo/seven.svg') no-repeat center/contain;"></div>
                     <p class="text-white text-[600] text-[.75rem]">Slot</p>
                 </div>

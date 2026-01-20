@@ -11,7 +11,7 @@
                 <div class="w-[1px] h-full bg-white/20"></div>
                 <div class="flex-1 px-[.75rem] h-full relative">
                     <p class="text-[var(--color-active)] text-[.75rem] text-left">{{ inviteUrl }}</p>
-                    <div class="flex items-center justify-center absolute right-[.25rem] bottom-[.25rem] text-white text-[.65rem] rounded-[.375rem] bg-[var(--color-bg-aside)] border border-[var(--color-border-1)] w-[4.875rem] h-[1.75rem] cursor-pointer hover:brightness-[1.1]" @click="copyInviteUrl">
+                    <div class="flex items-center justify-center absolute right-[.25rem] bottom-[.25rem] text-white text-[.65rem] rounded-[.375rem] !bg-[var(--color-bg-aside)] border border-[var(--color-border-1)] w-[4.875rem] h-[1.75rem] cursor-pointer hover:brightness-[1.1]" @click="copyInviteUrl">
                         <ion-icon class="text-[1rem] cursor-pointer mr-[.25rem]" name="copy-outline"></ion-icon>
                         Copiar​​
                     </div>

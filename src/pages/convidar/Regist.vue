@@ -8,7 +8,7 @@
       <div class="flex items-center justify-between border border-[var(--color-border-2)] rounded-[.375rem] p-[.5rem]">
         <span class="text-[var(--color-text-link)] text-[.85rem]">{{ inviteLink }}</span>
         <div class="flex items-center gap-[.5rem]">
-          <button class="px-[.5rem] h-[2rem] rounded-[.375rem] bg-[var(--color-bg-aside)] text-white/80" @click="toggleLinkFormat">
+          <button class="px-[.5rem] h-[2rem] rounded-[.375rem] !bg-[var(--color-bg-aside)] text-white/80" @click="toggleLinkFormat">
             Alternar formato
           </button>
           <button class="px-[.5rem] h-[2rem] rounded-[.375rem] bg-[var(--color-active)] text-[var(--color-main-bg)]" @click="copyLink">

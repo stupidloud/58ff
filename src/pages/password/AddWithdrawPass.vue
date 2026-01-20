@@ -14,7 +14,7 @@
                     v-model="newPassword[index]"
                     type="password"
                     maxlength="1"
-                    class="w-[2.75rem] h-[2.75rem] bg-[var(--color-bg-aside)] border border-white/10 rounded-[.375rem] text-center text-white text-[2.25rem] font-[600] focus:border-[var(--color-active)] focus:outline-none"
+                    class="w-[2.75rem] h-[2.75rem] !bg-[var(--color-bg-aside)] border border-white/10 rounded-[.375rem] text-center text-white text-[2.25rem] font-[600] focus:border-[var(--color-active)] focus:outline-none"
                     @input="handleNewPasswordInput(index, $event)"
                     @keydown="handleKeydown(index, $event, 'new')"
                 />
@@ -31,7 +31,7 @@
                     v-model="confirmPassword[index]"
                     type="password"
                     maxlength="1"
-                    class="w-[2.75rem] h-[2.75rem] bg-[var(--color-bg-aside)] border border-white/10 rounded-[.375rem] text-center text-white text-[2.25rem] font-[600] focus:border-[var(--color-active)] focus:outline-none"
+                    class="w-[2.75rem] h-[2.75rem] !bg-[var(--color-bg-aside)] border border-white/10 rounded-[.375rem] text-center text-white text-[2.25rem] font-[600] focus:border-[var(--color-active)] focus:outline-none"
                     @input="handleConfirmPasswordInput(index, $event)"
                     @keydown="handleKeydown(index, $event, 'confirm')"
                 />

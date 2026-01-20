@@ -34,7 +34,7 @@
           </div>
           <div
             class="mt-[.75rem] h-[2.5rem] rounded-[2rem] flex items-center justify-center font-[700] text-[.8rem]"
-            :class="canSign ? 'bg-[var(--color-active)] text-white cursor-pointer' : 'bg-[var(--color-bg-aside)] text-[var(--color-active)] border border-[var(--color-active)] opacity-80 cursor-not-allowed'"
+            :class="canSign ? 'bg-[var(--color-active)] text-white cursor-pointer' : '!bg-[var(--color-bg-aside)] text-[var(--color-active)] border border-[var(--color-active)] opacity-80 cursor-not-allowed'"
             @click="handleSign"
           >
             {{ isAuthenticated ? 'Receber recompensa' : 'Entrar' }}

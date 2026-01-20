@@ -6,7 +6,7 @@
         <p class="text-[var(--color-warning)] text-[.95rem] font-[700]">{{ formatCurrency(totalBonusAmount) }}</p>
       </div>
       <div class="mt-[.75rem] flex items-center justify-end gap-[.5rem]">
-        <button class="px-[.75rem] h-[2.25rem] rounded-[.375rem] bg-[var(--color-bg-aside)] text-white/80 cursor-pointer" @click="showHistory = true">Histórico</button>
+        <button class="px-[.75rem] h-[2.25rem] rounded-[.375rem] !bg-[var(--color-bg-aside)] text-white/80 cursor-pointer" @click="showHistory = true">Histórico</button>
         <button class="px-[.75rem] h-[2.25rem] rounded-[.375rem] bg-[var(--color-active)] text-[var(--color-main-bg)] cursor-not-allowed opacity-60">Receber</button>
       </div>
     </div>

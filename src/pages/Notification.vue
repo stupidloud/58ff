@@ -20,7 +20,7 @@
             Serviço ao cliente disponível para ajudar a solucionar problemas e responder a dúvidas apresentadas.
           </p>
           <div
-            class="mt-[.6rem] w-full h-[2rem] bg-[var(--color-bg-aside)] flex justify-center items-center text-[var(--color-active)] text-[.75rem] font-[700] shadow-[0_3px_1px_-2px_rgba(0,0,0,0.2),_0_2px_2px_0_rgba(0,0,0,0.14),_0_1px_5px_0_rgba(0,0,0,0.12)]">
+            class="mt-[.6rem] w-full h-[2rem] !bg-[var(--color-bg-aside)] flex justify-center items-center text-[var(--color-active)] text-[.75rem] font-[700] shadow-[0_3px_1px_-2px_rgba(0,0,0,0.2),_0_2px_2px_0_rgba(0,0,0,0.14),_0_1px_5px_0_rgba(0,0,0,0.12)]">
             Contato
           </div>
         </div>
@@ -35,7 +35,7 @@
             <p class="text-white/40 text-[.75rem] leading-[1.125rem] truncate max-w-[10rem]">{{ normalize(item.link_url) }}</p>
           </div>
           <button
-            class="ml-auto w-[4.5rem] h-[1.8rem] bg-[var(--color-bg-aside)] flex justify-center items-center text-[var(--color-active)] text-[.75rem] font-[700]"
+            class="ml-auto w-[4.5rem] h-[1.8rem] !bg-[var(--color-bg-aside)] flex justify-center items-center text-[var(--color-active)] text-[.75rem] font-[700]"
             @click="openContact(item.link_url)"
           >
             Contato

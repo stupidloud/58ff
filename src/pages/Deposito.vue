@@ -16,7 +16,7 @@
             </div>
             suporte online.
         </div>
-        <div class="w-full h-[2.75rem] flex items-center justify-center rounded-[.315rem] bg-[var(--color-bg-aside)]  text-white text-[13px] font-[600] border-2 border-black/30 cursor-pointer hover:brightness-105">
+        <div class="w-full h-[2.75rem] flex items-center justify-center rounded-[.315rem] !bg-[var(--color-bg-aside)]  text-white text-[13px] font-[600] border-2 border-black/30 cursor-pointer hover:brightness-105">
             Depósito on-line 
         </div>
     </div>
@@ -57,7 +57,7 @@
             class="w-[calc(33.333%-0.5rem)] flex items-center justify-center rounded-[.315rem] h-[3rem] text-white text-[1rem] font-[700] cursor-pointer hover:brightness-105 transition-all duration-200"
             :class="selectedAmount === plan.amount.toString() ? 
               'border border-[var(--color-active)] [background:linear-gradient(180deg,rgba(0,0,0,0)_30.59%,var(--color-active)_110.34%),_var(--color-tabbar)]' : 
-              'bg-[var(--color-bg-aside)]'"
+              '!bg-[var(--color-bg-aside)]'"
           >
             {{ plan.amount }}
           </div>
