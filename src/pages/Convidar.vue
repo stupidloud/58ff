@@ -2,7 +2,7 @@
     <div class="min-h-screen bg-[var(--color-main-bg)]">
         <NavBar :canReturn="true" :title="'ConvidarCentro'"></NavBar>        
 
-        <div class="sticky top-[3.1rem] z-[30] bg-[var(--color-main-bg)]">
+        <div class="sticky top-[3.1rem] z-[20] bg-[var(--color-main-bg)]">
             <div ref="navContainer"
                 class="pt-[.75rem] flex items-center border-b border-[var(--color-bg-aside)] pl-[.625rem] overflow-x-auto scrollbar-hide bg-black/5 relative">
                 <div v-for="item in navs" :key="item.id" ref="navItems"
@@ -18,18 +18,20 @@
         </div>
 
         <!-- 内容区域 -->
-        <div class="px-[.75rem] py-[1.25rem]">
+        <div class="px-[.75rem] pt-[1.25rem]">
             <component :is="currentComponent" />
         </div>
     </div>
 </template>
 <script setup lang="ts">
 import { ref, onMounted, nextTick, computed } from 'vue'
+import { useRoute } from 'vue-router'
 import Link from './convidar/Link.vue'
 import Rede from './convidar/Rede.vue'
 import Desem from './convidar/Desem.vue'
 import Comi from './convidar/Comi.vue'
 import Taxa from './convidar/Taxa.vue'
+import DadosSubordinado from './convidar/DadosSubordinado.vue'
 
 const navs = ref([
     {
@@ -52,6 +54,10 @@ const navs = ref([
         id: 5,
         label: 'Taxa de Bônus do Agente'
     },
+    {
+        id: 6,
+        label: 'Dados do Subordinado'
+    }
 ])
 
 const activeNav = ref(1)
@@ -59,6 +65,7 @@ const navContainer = ref<HTMLElement>()
 const navItems = ref<HTMLElement[]>([])
 const indicatorLeft = ref(0)
 const indicatorWidth = ref(0)
+const route = useRoute()
 
 // 计算指示线位置和宽度
 const updateIndicator = () => {
@@ -116,7 +123,8 @@ const componentMap: Record<number, any> = {
     2: Rede,
     3: Desem,
     4: Comi,
-    5: Taxa,    
+    5: Taxa,
+    6: DadosSubordinado
 }
 
 // 当前组件计算属性
@@ -124,7 +132,16 @@ const currentComponent = computed(() => {
     return componentMap[activeNav.value] || Link
 })
 
-onMounted(() => {
+onMounted(async () => {
+    const q = route.query?.tab
+    const id = typeof q === 'string' ? Number(q) : Array.isArray(q) ? Number(q[0]) : NaN
+    if (!Number.isNaN(id) && componentMap[id]) {
+        activeNav.value = id
+        await nextTick()
+        updateIndicator()
+        scrollToActiveItem()
+        return
+    }
     nextTick(() => {
         updateIndicator()
     })

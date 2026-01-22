@@ -7,7 +7,7 @@
             </div>            
         </div>
         <div class="pt-[1.8125rem]">
-            <div class="w-full h-[2.75rem] bg-[var(--color-bg-aside)] flex items-center rounded-[.315rem]">
+            <div class="w-full h-[2.75rem] !bg-[var(--color-bg-aside)] flex items-center rounded-[.315rem]">
                 <p class="text-white/40 font-[700] text-[.75rem] flex-1">Tempo</p>
                 <p class="text-white/40 font-[700] text-[.75rem] flex-1 text-left">Nome do Evento</p>
                 <p class="text-white/40 font-[700] text-[.75rem] flex-1">Evento de Recompensa</p>

@@ -7,7 +7,6 @@
       <div
         v-if="open"
         class="login-overlay relative"        
-        aria-hidden="true"
       >
         <div class="flex p-[1rem] items-center justify-between">
             <img class="h-[1.75rem] w-auto" src="/variable/logo.png" alt="">
@@ -37,6 +36,7 @@
 import { ref, watch } from 'vue'
 import LoginForm from './LoginForm.vue'
 import RegisterForm from './RegisterForm.vue'
+import { useAuthStore } from '../../stores/auth'
 
 const props = defineProps<{ 
   open: boolean,
@@ -46,6 +46,7 @@ const props = defineProps<{
 const emit = defineEmits<{ (e: 'update:open', v: boolean): void }>();
 
 const activeForm = ref(props.initialMode || 'login');
+const auth = useAuthStore()
 
 watch(() => props.initialMode, (newMode) => {
   if (newMode) {
@@ -58,6 +59,10 @@ const toggleForm = () => {
 }
 
 const close = () => emit('update:open', false);
+
+watch(() => auth.isLoggedIn, (logged) => {
+  if (logged) emit('update:open', false)
+})
 </script>
 
 <style scoped>

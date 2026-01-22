@@ -18,7 +18,7 @@
                 <div v-show="isDropdownOpen"
                     class="absolute top-full left-0 mt-[.25rem] bg-[var(--color-bg-aside-2)] rounded-[.1rem] shadow-lg z-10 w-[7.5rem] overflow-hidden">
                     <div v-for="option in options" :key="option.value" @click="selectOption(option)"
-                        :class="{ 'bg-[var(--color-bg-aside)] !text-white': option.value === selectedOption.value }"
+                        :class="{ '!bg-[var(--color-bg-aside)] !text-white': option.value === selectedOption.value }"
                         class="h-[2.2rem] text-[.75rem] text-white/40 flex items-center justify-center cursor-pointer transition-colors duration-150">
                         {{ option.label }}
                     </div>
@@ -29,7 +29,7 @@
             </div>            
         </div>
         <div class="pt-[1.8125rem]">
-            <div class="w-full h-[2.75rem] bg-[var(--color-bg-aside)] flex items-center rounded-[.315rem]">
+            <div class="w-full h-[2.75rem] !bg-[var(--color-bg-aside)] flex items-center rounded-[.315rem]">
                 <p class="text-white/40 font-[700] text-[.75rem] flex-1">Tempo</p>
                 <p class="text-white/40 font-[700] text-[.75rem] flex-1 text-left">Nome do Evento</p>
                 <p class="text-white/40 font-[700] text-[.75rem] flex-1">Evento de Recompensa</p>

@@ -14,7 +14,7 @@
                     v-model="newPassword[index]"
                     type="password"
                     maxlength="1"
-                    class="w-[2.75rem] h-[2.75rem] bg-[var(--color-bg-aside)] border border-white/10 rounded-[.375rem] text-center text-white text-[2.25rem] font-[600] focus:border-[var(--color-active)] focus:outline-none"
+                    class="w-[2.75rem] h-[2.75rem] !bg-[var(--color-bg-aside)] border border-white/10 rounded-[.375rem] text-center text-white text-[2.25rem] font-[600] focus:border-[var(--color-active)] focus:outline-none"
                     @input="handleNewPasswordInput(index, $event)"
                     @keydown="handleKeydown(index, $event, 'new')"
                 />
@@ -31,7 +31,7 @@
                     v-model="confirmPassword[index]"
                     type="password"
                     maxlength="1"
-                    class="w-[2.75rem] h-[2.75rem] bg-[var(--color-bg-aside)] border border-white/10 rounded-[.375rem] text-center text-white text-[2.25rem] font-[600] focus:border-[var(--color-active)] focus:outline-none"
+                    class="w-[2.75rem] h-[2.75rem] !bg-[var(--color-bg-aside)] border border-white/10 rounded-[.375rem] text-center text-white text-[2.25rem] font-[600] focus:border-[var(--color-active)] focus:outline-none"
                     @input="handleConfirmPasswordInput(index, $event)"
                     @keydown="handleKeydown(index, $event, 'confirm')"
                 />
@@ -53,6 +53,8 @@
 import { ref, nextTick, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '../../stores/auth'
+import { playerApi } from '../../services/api'
+import { showToast } from '../../components/toast/service'
 
 const router = useRouter()
 const auth = useAuthStore()
@@ -84,22 +86,31 @@ const handleSetPassword = async () => {
   loading.value = true
   
   try {
-    // 模拟API调用
-    await new Promise(resolve => setTimeout(resolve, 2000))
-    
-    // 这里可以添加实际的密码设置逻辑
-    console.log('设置密码:', newPassword.value.join(''))
-    
-    // 设置成功后的处理
-    // 设置提现密码状态为已设置
-    auth.setWithdrawPassword(true)
-    
-    // 跳转到成功页面
-    router.push({ name: 'senha-saque' })
-    
+    const np = newPassword.value.join('')
+    const cp = confirmPassword.value.join('')
+    if (np.length !== 6 || cp.length !== 6) {
+      showToast('A senha de saque deve ter 6 dígitos')
+      return
+    }
+    if (!/^\d{6}$/.test(np)) {
+      showToast('A senha de saque deve conter apenas números')
+      return
+    }
+    if (np !== cp) {
+      showToast('As senhas não coincidem')
+      return
+    }
+    const response = await playerApi.setWithdrawPassword(np)
+    if ((response as any).code === 1) {
+      auth.setWithdrawPassword(true)
+      router.push({ name: 'senha-saque' })
+    } else {
+      const msg = (response as any).msg || 'Erro ao alterar senha de saque'
+      showToast(msg)
+    }
   } catch (error) {
-    console.error('设置密码失败:', error)
-    
+    const msg = error instanceof Error ? error.message : 'Erro ao alterar senha de saque, tente novamente'
+    showToast(msg)
   } finally {
     loading.value = false
   }

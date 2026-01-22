@@ -3,11 +3,11 @@
     <!-- 头部 -->
     <div class="w-full h-auto sticky top-0 z-10">
       <!-- 下载模块 -->
-      <div class="bg-[var(--color-main-bg)] flex items-center w-full overflow-hidden relative h-[3.125rem] px-[.75rem]">
+      <div v-if="showInstallCTA" class="bg-[var(--color-main-bg)] flex items-center w-full overflow-hidden relative h-[3.125rem] px-[.75rem]">
         <div
           class="absolute top-[-.2rem] left-[.1rem] w-[3.6rem] h-[3.6rem] bg-[rgba(255,255,255,0.1)] transform -translate-x-1/2 -translate-y-1/2 rounded-[100px]">
         </div>
-        <div class="absolute top-[.25rem] left-[.25rem] text-[.875rem] text-white">
+        <div class="absolute top-[.25rem] left-[.25rem] text-[.875rem] text-white cursor-pointer" @click="showInstallCTA = false" role="button" aria-label="Fechar">
           <svg fill="currentColor" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
             <path
               d="M289.94 256l95-95A24 24 0 00351 127l-95 95-95-95a24 24 0 00-34 34l95 95-95 95a24 24 0 1034 34l95-95 95 95a24 24 0 0034-34z">
@@ -15,15 +15,18 @@
           </svg>
         </div>
         <div class="ml-[2rem] flex items-center">
-          <img src="/variable/favicon_38.png" alt="" class="w-[2rem] h-[2rem]" />
+          <img src="/icon-512.png" alt="" class="w-[2rem] h-[2rem]" />
           <div class="text-left mx-[.438rem]">
             <p class="text-white text-[.75rem]">Baixe Nosso APP,</p>
             <p class="text-white text-[.75rem]">Ganhe Super Prêmios!</p>
           </div>
           <img src="/static/pwa-money.png" alt="" class="w-[1.75rem] h-[1.75rem]" />
         </div>
-        <div
-          class="w-[6.75rem] h-[2.125rem] flex items-center justify-between ml-auto rounded-[.467rem] py-[.5rem] px-[.625rem] bg-[linear-gradient(90deg,rgb(195,60,80)_-27.5%,rgb(196,228,94)_127.5%)]">
+        <div          
+          class="w-[6.75rem] h-[2.125rem] flex items-center justify-between ml-auto rounded-[.467rem] py-[.5rem] px-[.625rem] bg-[linear-gradient(90deg,rgb(195,60,80)_-27.5%,rgb(196,228,94)_127.5%)] cursor-pointer"
+          @click="onInstallClick"
+          role="button"
+          aria-label="Instalar PWA">
           <div class="text-white">
             <svg width="1.65rem" height="1.65rem" viewBox="0 0 25 24" fill="currentColor"
               xmlns="http://www.w3.org/2000/svg" class="s-ion-icon">
@@ -74,7 +77,7 @@
         class="flex items-center flex-1 justify-end"
         v-else>
           <img class="w-[1.25rem] h-auto mr-[.3215rem]" src="/static/withdraw.png" alt="">
-          <p class="text-shadow-[var(--currency-shadow,0_0_.625rem_var(--color-active))] text-white mr-[.25rem] text-[.75rem] font-[700]">R$0,30</p>
+          <p class="text-shadow-[var(--currency-shadow,0_0_.625rem_var(--color-active))] text-white mr-[.25rem] text-[.75rem] font-[700]">R$ {{ balanceDisplay }}</p>
           <div class="ml-[0.375rem] rounded-[0.375rem] border-[0.0625rem] border-[var(--color-highlight)] px-[0.5rem] py-[0.375rem] shadow-[inset_0_0_0.5563rem_0_var(--color-highlight)] cursor-pointer">
             <div class="w-[1rem] h-[1rem] bg-[var(--color-highlight)] bg-no-repeat bg-contain mask-[url('/static/pig.svg')] mask-center animate-pig-elastic-bounce will-change-transform"></div>
           </div>
@@ -96,14 +99,14 @@
 
     <!-- 礼物区域 -->
     <div class="flex justify-between px-[.75rem] mt-[.75rem]">
-      <div class="rounded-[.875rem] w-[11rem] overflow-hidden animate-float-1">
+      <div class="rounded-[.875rem] w-[11rem] overflow-hidden animate-float-1 cursor-pointer" @click="router.push('/invite')">
         <img class="w-full h-auto" src="/static/gift1.gif" alt="" />
       </div>
       <div class="flex flex-col items-center justify-between">
-        <div class="rounded-[.875rem] w-[11rem] overflow-hidden animate-float-2">
+        <div class="rounded-[.875rem] w-[11rem] overflow-hidden animate-float-2 cursor-pointer" @click="router.push('/promo/event/missao')">
           <img class="w-full h-auto" src="/static/gift2.gif" alt="" />
         </div>
-        <div class="rounded-[.875rem] w-[11rem] overflow-hidden animate-float-3">
+        <div class="rounded-[.875rem] w-[11rem] overflow-hidden animate-float-3 cursor-pointer" @click="router.push('/promo/event/turntable')">
           <img class="w-full h-auto" src="/static/gift3.gif" alt="" />
         </div>
       </div>
@@ -116,25 +119,22 @@
         <img class="w-1.5rem h-auto" src="/static/broadcast.png" alt="" />
         <div class="marquee w-full ml-[.5rem]">
           <div class="marquee-track">
-            <span class="whitespace-nowrap font-[600] text-[.875rem] text-[var(--color-highlight)]">Código de resgate em
-              20 de outubro: 10188 Recompensa máxima: R$
-              777 Lembramos que essas informações serão atualizadas diariamente
-              às 12h, horário de Brasília.Para mais perguntas sobre recompensas
-              no jogo, verifique as informações do anúncio.</span>
-            <span class="whitespace-nowrap font-[600] text-[.875rem] text-[var(--color-highlight)]">Código de resgate em
-              20 de outubro: 10188 Recompensa máxima: R$
-              777 Lembramos que essas informações serão atualizadas diariamente
-              às 12h, horário de Brasília.Para mais perguntas sobre recompensas
-              no jogo, verifique as informações do anúncio.</span>
+            <span
+              v-for="(text, i) in marqueeTexts"
+              :key="i"
+              class="whitespace-nowrap font-[600] text-[.875rem] text-[var(--color-highlight)]"
+            >
+              {{ text }}
+            </span>
           </div>
         </div>
-        <p class="bg-[var(--color-active)] px-[.5rem] py-[.25rem] rounded-[.5rem] font-[600] text-[.75rem] text-white">
+        <!-- <p class="bg-[var(--color-active)] px-[.5rem] py-[.25rem] rounded-[.5rem] font-[600] text-[.75rem] text-white">
           7
-        </p>
+        </p> -->
       </div>
       <div
-      @click="goToSearch()"
-        class="ml-[.625rem] w-[2.5rem] h-[2.5rem] rounded-[.875rem] flex items-center text-white justify-center border border-[#4a3695] bg-[#372380]">
+        class="ml-[.625rem] w-[2.5rem] h-[2.5rem] rounded-[.875rem] flex items-center text-white justify-center border border-[#4a3695] bg-[#372380] cursor-pointer"
+        @click="router.push('/slot')">
         <ion-icon name="search-outline" class="text-white text-[2rem]"></ion-icon>
       </div>
     </div>
@@ -142,104 +142,84 @@
     <!-- 游戏tape -->
     <div class="px-[.75rem] mt-[1rem] mb-[.5rem]">
       <div class="w-full overflow-x-auto hide-scrollbar rounded-[.875rem]">
-        <div 
-        @click="goToGame('Popular')"
-        class="flex flex-nowrap gap-[.625rem] w-max">
+        <div class="flex flex-nowrap gap-[.625rem] w-max">
           <div
-            class="w-[4.25rem] h-[5.375rem] px-[.25rem] pt-[.4375rem] bg-[url('/static/tab-act-bg.png')] bg-cover bg-center border-[.0625rem] border-[#D64258] rounded-[.875rem]">
+            class="w-[4.25rem] h-[5.375rem] px-[.25rem] pt-[.4375rem] bg-cover bg-center border-[.0625rem] rounded-[.875rem] cursor-pointer"
+            :class="selectedTape === 'popular' ? 'bg-[url(/static/tab-act-bg.png)] border-[#D64258]' : 'bg-[var(--color-tabbar)] border-[#D64258]'"
+            @click="selectedTape = 'popular'"
+            role="button"
+            :aria-pressed="selectedTape === 'popular'">
             <div
               class="w-[2.25rem] h-[2.25rem] rounded-[9999px] bg-[var(--color-main-bg)] m-auto flex justify-center items-center">
-              <img class="w-[1.2rem] h-[1.2rem]" src="/static/game_type_1.svg" alt="" />
+              <img class="w-[1.2rem] h-[1.2rem]" src="/static/game_type_1.svg" alt="">
             </div>
             <p class="text-center text-white text-[.875rem] font-[600]">
               Popular
             </p>
             <p class="text-center text-[#FFFFFF66] text-[.625rem] font-[400]">
-              100 games
+              {{ popularCount }} games
             </p>
-          </div>        
-          <div v-for="(item, idx) in gameTypes" :key="idx"
-          @click="goToGame(item.label)"
-            class="w-[4.25rem] h-[5.375rem] px-[.25rem] pt-[.4375rem] bg-[var(--color-tabbar)] border-[.0625rem] border-[#D64258] rounded-[.875rem] hover:opacity-80 transition-opacity duration-200 flex-shrink-0">
+          </div>
+          <div v-for="provider in providers" :key="provider.id"
+            class="w-[4.25rem] h-[5.375rem] px-[.25rem] pt-[.4375rem] border-[.0625rem] rounded-[.875rem] hover:opacity-80 transition-opacity duration-200 flex-shrink-0 cursor-pointer"
+            :class="selectedTape === provider.id ? 'bg-[url(/static/tab-act-bg.png)] border-[#D64258]' : 'bg-[var(--color-tabbar)] border-[#D64258]'"
+            @click="selectedTape = provider.id"
+            role="button"
+            :aria-pressed="selectedTape === provider.id">
             <div
               class="w-[2.25rem] h-[2.25rem] rounded-[9999px] bg-[var(--color-main-bg)] m-auto flex justify-center items-center">
-              <div class="w-[1.5rem] h-[1.5rem] bg-[length:800%_400%] bg-[url('/static/game_platform.png')]"
-                :style="{ backgroundPosition: `${item.posX} ${item.posY}` }"></div>
+              <img class="w-[1.2rem] h-[1.2rem]" :src="provider.image" :alt="provider.name">
             </div>
             <p class="text-center text-white text-[.875rem] font-[600] truncate">
-              {{ item.label }}
+              {{ provider.name }}
             </p>
             <p class="text-center text-[#FFFFFF66] text-[.625rem] font-[400]">
-              {{ item.count }} games
+              {{ providerCounts.get(provider.id) || 0 }} games
             </p>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- gameList -->
-    <div v-for="(item, idx) in 2" :key="idx">
-      <div class="flex justify-between items-center px-[.75rem] mt-[1.75rem] mb-[.9375rem]">
-        <div class="flex items-center">
-          <svg class="w-[2rem] h-[2rem]" viewBox="0 0 32 33" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <linearGradient id="default-POPULAR" x1="9.06836" y1="0" x2="9.06836" y2="18"
-                gradientUnits="userSpaceOnUse">
-                <stop stop-color="#E64021" />
-                <stop offset="1" stop-color="#E64021" />
-              </linearGradient>
-            </defs>
-
-            <g id="Popular">
-              <path id="Vector"
-                d="M13.3028 29.8263C13.3028 29.8263 1.77247 27.29 6.926 14.7021C6.926 14.7021 8.096 16.1009 7.93512 16.774C7.93512 16.774 8.85227 13.5968 10.8318 11.6988C12.5316 10.0679 14.2586 5.48314 12.6658 3.82629C12.6658 3.82629 20.5552 5.48314 21.4333 13.7706C21.4333 13.7706 22.4425 11.13 24.5143 10.869C24.5143 10.869 23.8773 12.3198 24.5143 14.496C24.5143 14.496 31.0494 25.6825 19.7869 29.4636C19.7869 29.4636 23.163 25.6302 16.0032 19.0519C16.0032 19.0519 14.3152 22.5749 13.3057 23.8164C13.3028 23.8196 10.4867 26.9767 13.3028 29.8263Z"
-                fill="url(#default-POPULAR)" />
-            </g>
-          </svg>
-          <p class="text-white text-[1.125rem] font-[700] ml-[.3125rem]">
-            Popular
-          </p>
-        </div>
-        <div class="flex items-center">
-          <p class="text-white text-[.75rem] font-[600]">Todos</p>
-          <p
-            class="text-[.75rem] font-[700] py-[.125rem] px-[.625rem] rounded-[.625rem] ml-[.375rem] text-[#D64258] bg-[linear-gradient(90deg,#372380_0%,#982F3E_100%)] shadow-[-0.0625rem_0_0_0_#D64258]">
-            100
-          </p>
-        </div>
+    <div class="px-[.75rem]">
+      <div v-if="gamesLoading" class="p-[1rem] text-center">
+        <div class="text-white/60 text-[1rem]">Carregando jogos...</div>
       </div>
-      <div class="flex gap-[.75rem] flex-wrap px-[.75rem]">
-        <div class="relative w-[calc(25%-0.5625rem)] rounded-[12.5%_/_9.25%] overflow-hidden" v-for="(item, idx) in 16"
-          :key="idx">
-          <img src="https://game-logo.6-q-r-s.com/prod/style1/en/PG_FortuneTiger.jpg" alt="" />
-          <!-- 收藏角标 -->
-          <div class="text-[#ff8e04] absolute top-[.5rem] right-[.5rem] cursor-pointer" @click="toggleFav(idx)"
-            :aria-pressed="isFav(idx)" :title="isFav(idx) ? '已收藏' : '未收藏'">
-            <svg class="w-[.875rem] h-[.875rem] text-current" viewBox="0 0 14 14" fill="none"
-              xmlns="http://www.w3.org/2000/svg">
-              <defs>
-                <linearGradient id="gradient" x1="3.5" y1="14" x2="3.5" y2="0" gradientUnits="userSpaceOnUse">
-                  <stop stop-color="white" />
-                  <stop offset="1" stop-color="white" />
-                </linearGradient>
-                <clipPath id="clip">
-                  <rect width="14" height="14" fill="white" />
-                </clipPath>
-              </defs>
-
-              <g clip-path="url(#clip)">
-                <!-- 主图形，支持填充/描边两种状态 -->
-                <path
-                  d="M6.31455 3.13898C6.62548 2.62232 7.37452 2.62232 7.68545 3.13898L8.47104 4.44436C8.58274 4.62997 8.76494 4.76235 8.97598 4.81122L10.4602 5.15498C11.0477 5.29103 11.2792 6.00341 10.8839 6.45878L9.88513 7.6093C9.74313 7.7729 9.67353 7.98708 9.69226 8.2029L9.82399 9.72074C9.87613 10.3215 9.27014 10.7618 8.71491 10.5265L7.31207 9.93221C7.11261 9.84771 6.8874 9.84771 6.68793 9.93221L5.28509 10.5265C4.72986 10.7618 4.12387 10.3215 4.17601 9.72074L4.30774 8.2029C4.32647 7.98708 4.25687 7.7729 4.11487 7.6093L3.11613 6.45878C2.72085 6.00341 2.95231 5.29103 3.53976 5.15498L5.02402 4.81122C5.23506 4.76235 5.41726 4.62997 5.52896 4.44436L6.31455 3.13898Z"
-                  :fill="isFav(idx) ? 'currentColor' : 'none'" fill-opacity="0.93" />
-
-                <!-- 渐变叠加：收藏时可见，未收藏隐藏以避免覆盖描边 -->
-                <path opacity="0.7"
-                  d="M7 0C10.8659 0 14 3.13411 14 7C13.9999 10.8658 10.8658 14 7 14C3.1342 14 0.00010282 10.8658 0 7C0 3.13413 3.13414 2.91211e-05 7 0ZM7.68555 3.13867C7.37459 2.62226 6.62541 2.62226 6.31445 3.13867L5.5293 4.44434C5.41765 4.62985 5.23533 4.76259 5.02441 4.81152L3.54004 5.15527C2.95259 5.29133 2.72092 6.00362 3.11621 6.45898L4.11523 7.60938C4.25711 7.77294 4.32634 7.9874 4.30762 8.20312L4.17578 9.7207C4.12364 10.3214 4.72993 10.7616 5.28516 10.5264L6.6875 9.93262C6.88697 9.84811 7.11303 9.84811 7.3125 9.93262L8.71484 10.5264C9.27007 10.7616 9.87636 10.3214 9.82422 9.7207L9.69238 8.20312C9.67366 7.9874 9.74289 7.77294 9.88477 7.60938L10.8838 6.45898C11.2791 6.00362 11.0474 5.29133 10.46 5.15527L8.97559 4.81152C8.76467 4.76259 8.58235 4.62985 8.4707 4.44434L7.68555 3.13867Z"
-                  fill="url(#gradient)" />
-              </g>
-            </svg>
+      <div v-else-if="gamesError" class="p-[1rem] text-center">
+        <div class="text-[#E84F46] text-[1rem]">{{ gamesError }}</div>
+      </div>
+      <div v-else>
+        <div class="flex justify-between items-center px-[.75rem] mt-[1.75rem] mb-[.9375rem]">
+          <div class="flex items-center">
+            <p class="text-white text-[1.125rem] font-[700] ml-[.3125rem]">
+              {{ displayedTitle }}
+            </p>
           </div>
+          <div class="flex items-center">
+            <p class="text-white text-[.75rem] font-[600]">Todos</p>
+            <p class="text-[.75rem] font-[700] py-[.125rem] px-[.625rem] rounded-[.625rem] ml-[.375rem] text-[#D64258] bg-[linear-gradient(90deg,#372380_0%,#982F3E_100%)] shadow-[-0.0625rem_0_0_0_#D64258]">
+              {{ displayedTotal }}
+            </p>
+          </div>
+        </div>
+        <div class="flex gap-[.75rem] flex-wrap px-[.75rem]">
+          <div class="relative w-[calc(25%-0.5625rem)] rounded-[12.5%_/_9.25%] overflow-hidden cursor-pointer" v-for="game in displayedGames" :key="game.id" @click="launchGame(game.id)">
+            <img :src="game.image" :alt="game.name" />
+            <div class="absolute bottom-0 left-0 right-0 bg-black/40 text-white text-[.75rem] px-[.375rem] py-[.25rem] truncate">
+              {{ game.name }}
+            </div>
+          </div>
+        </div>
+        <div @click="loadMore">
+          <p class="text-white text-[.75rem] text-center w-full mt-[1rem]">
+          A exibir {{ displayedCount }} jogos entre {{ displayedTotal }} {{ displayedTitle }} jogos
+        </p>
+        <p
+          v-if="displayedCount < displayedTotal"
+          class="text-white text-[.75rem] w-full text-center flex items-center justify-center cursor-pointer"          
+        >
+          Carregar mais ⬇️          
+        </p>
         </div>
       </div>
     </div>
@@ -342,29 +322,39 @@ import { Swiper, SwiperSlide } from "swiper/vue";
 import "swiper/css";
 
 import { Autoplay } from "swiper/modules";
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed, watch } from "vue";
 import { useRouter } from "vue-router";
 import { showGiftAlert } from "../components/giftAlert/service";
 import { showPop, hidePop } from "../components/pop/service";
-import { showInstall, hideInstall } from "../components/install/service";
+import { showInstall } from "../components/install/service";
 import { showOpenTime } from "../components/openTime/service";
 import SideBar from "../components/SideBar.vue";
 import Login from "./login/Login.vue";
 import { useAuthStore } from "../stores/auth";
+import { gameApi, type Game, type GameProvider } from "../services/api";
+import { preloadService } from "../services/preloadService";
+import { GameUrlEncoder } from "../utils/gameUrlEncoder";
+import { gameStorage } from "../services/gameStorage";
+import { showToast } from "../components/toast/service";
+import { useUiStore } from "../stores/ui";
+import { useAnnouncementStore } from "../stores/announcement";
 
 
 const router = useRouter();
 const auth = useAuthStore();
+const ui = useUiStore();
+const announcement = useAnnouncementStore();
+const currencyFormatter = new Intl.NumberFormat('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+const balanceDisplay = computed(() => currencyFormatter.format(auth.balance))
+const marqueeTexts = computed(() => {
+  const arr = announcement.announcementContents
+  if (arr.length > 0) return [...arr, ...arr] // 重复两次保证滚动连续
+  return ['Bem-vindo!']
+})
 
 const isSidebarOpen = ref(false);
 const isLoginOpen = ref(false);
 const loginDefaultMode = ref<'login' | 'register'>('login');
-
-const goToSearch = () => {
-  router.push({ name: 'search' });
-}
-
-
 
 const images = [
   "/variable/banner1.png",
@@ -435,14 +425,14 @@ const gameTypes = [
     posY: "-300%",
   },
 ];
-const goToGame = (gameType: string) => {
-  router.push({ name: 'slot', query: { gameType } });
-}
+
 const favorites = ref<Record<number, boolean>>({});
 const isFav = (idx: number) => !!favorites.value[idx];
 const toggleFav = (idx: number) => {
   favorites.value[idx] = !isFav(idx);
 };
+
+const showInstallCTA = ref(true)
 
 // GiftAlert 相关：在首页创建并加载提示
 
@@ -450,39 +440,7 @@ const loadAlert = () => {
   showGiftAlert();
 };
 
-// 串行执行：Install → Pop → GiftAlert
-const runSequence = () => {
-  // Step 1: Install（先确保隐藏 Pop）
-  hidePop();
-  showInstall({
-    onClose: () => step2(),
-    onCancel: () => step2(),
-    onConfirm: () => step2(),
-  });
-
-  // Step 2: Pop（显示前确保隐藏 Install）
-  const step2 = () => {
-    hideInstall();
-    showPop({
-      title: "RESGATAR CÓDIGO",
-      subtitle: "CODIGO DE RESGATE DE HOJE:",
-      code: "92774",
-      lines: [
-        "EO BÔNUS MÁXIMO É 777 REAIS",
-        "SIGA O CANAL OFICIAL PARA",
-        "GANHAR MAIS BÔNUS A TEMPO.",
-      ],
-      buttonText: "CLIQUE PARA SEGUIR",
-      onClick: () => step3(),
-      onClose: () => step3(),
-    });
-  };
-
-  // Step 3: GiftAlert
-  const step3 = () => {
-    loadAlert();
-  };
-};
+// 已移除串行弹窗逻辑，按需触发安装弹窗或其他 UI
 
 // 跳转到通知页面
 const goToNotification = () => {
@@ -495,8 +453,139 @@ onMounted(() => {
 
 
   // 不再在挂载时直接调用 Pop 或 GiftAlert，避免同时展示
-
 });
+
+function onInstallClick() {
+  showInstall({
+    onConfirm: async () => {
+      const prompt = (window as any).deferredPrompt
+      if (prompt && typeof prompt.prompt === 'function') {
+        try {
+          await prompt.prompt()
+        } catch {}
+      }
+    },
+  })
+}
+
+function computeInstallVisibility() {
+  try {
+    const isStandalone = window.matchMedia && window.matchMedia('(display-mode: standalone)').matches
+    const isiOSStandalone = (navigator as any).standalone === true
+    const hasPrompt = !!(window as any).deferredPrompt
+    showInstallCTA.value = !isStandalone && !isiOSStandalone && hasPrompt
+  } catch {
+    showInstallCTA.value = true
+  }
+}
+
+computeInstallVisibility()
+window.addEventListener('appinstalled', () => {
+  showInstallCTA.value = false
+})
+window.addEventListener('beforeinstallprompt', () => {
+  computeInstallVisibility()
+})
+
+const gamesLoading = ref(true)
+const gamesError = ref('')
+const games = ref<Game[]>([])
+const providers = ref<GameProvider[]>([])
+const providerOrderMap = computed(() => {
+  const map = new Map<number, number>()
+  providers.value.forEach(p => map.set(p.id, p.sort_order ?? Number.POSITIVE_INFINITY))
+  return map
+})
+const popularCount = computed(() => games.value.length)
+const providerCounts = computed(() => {
+  const m = new Map<number, number>()
+  for (const g of games.value) {
+    m.set(g.provider_id, (m.get(g.provider_id) || 0) + 1)
+  }
+  return m
+})
+const selectedTape = ref<'popular' | number>('popular')
+const displayedTitle = computed(() => {
+  if (selectedTape.value === 'popular') return 'Populares'
+  const p = providers.value.find(x => x.id === selectedTape.value)
+  return p?.name || 'Jogos'
+})
+const displayedTotal = computed(() => {
+  if (selectedTape.value === 'popular') return popularCount.value
+  return providerCounts.value.get(selectedTape.value as number) || 0
+})
+const GAMES_PER_SECTION = 12
+const displayedCount = ref(GAMES_PER_SECTION)
+const displayedGames = computed(() => {
+  if (selectedTape.value === 'popular') {
+    const list = [...games.value].sort((a, b) => {
+      if (b.clicks !== a.clicks) return b.clicks - a.clicks
+      const ao = providerOrderMap.value.get(a.provider_id) ?? Number.POSITIVE_INFINITY
+      const bo = providerOrderMap.value.get(b.provider_id) ?? Number.POSITIVE_INFINITY
+      if (ao !== bo) return ao - bo
+      return b.id - a.id
+    })
+    return list.slice(0, displayedCount.value)
+  } else {
+    const pid = selectedTape.value as number
+    const list = games.value
+      .filter(g => g.provider_id === pid)
+      .sort((a, b) => {
+        if (b.clicks !== a.clicks) return b.clicks - a.clicks
+        return b.id - a.id
+      })
+    return list.slice(0, displayedCount.value)
+  }
+})
+watch(selectedTape, () => {
+  displayedCount.value = GAMES_PER_SECTION
+})
+function loadMore() {
+  displayedCount.value = Math.min(displayedCount.value + GAMES_PER_SECTION, displayedTotal.value)
+}
+async function fetchGames() {
+  try {
+    await preloadService.startPreload()
+    const [provList, gameList] = await Promise.all([
+      preloadService.getCachedProviders(),
+      preloadService.getCachedGames()
+    ])
+    providers.value = provList || []
+    games.value = gameList || []
+  } catch (e: any) {
+    gamesError.value = e?.message || 'Falha ao carregar jogos'
+  } finally {
+    gamesLoading.value = false
+  }
+}
+onMounted(fetchGames)
+onMounted(async () => {
+  try {
+    await announcement.fetchAnnouncements()
+  } catch {}
+})
+
+async function launchGame(gameId: number) {
+  if (!auth.isLoggedIn) {
+    ui.openLogin('login')
+    return
+  }
+  try {
+    const res = await gameApi.launchGame(gameId)
+    if (res.code === 1) {
+      const url = res.data.game_url
+      try {
+        await gameStorage.updateLastPlayedAt(gameId)
+      } catch {}
+      const token = GameUrlEncoder.encode(url)
+      router.push({ path: `/game/${gameId}`, query: { token } })
+    } else {
+      showToast(res.msg || 'Falha ao iniciar o jogo')
+    }
+  } catch (e: any) {
+    showToast(e?.message || 'Falha ao iniciar o jogo')
+  }
+}
 </script>
 
 <style scoped>
