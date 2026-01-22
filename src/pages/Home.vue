@@ -144,7 +144,7 @@
       <div class="w-full overflow-x-auto hide-scrollbar rounded-[.875rem]">
         <div class="flex flex-nowrap gap-[.625rem] w-max">
           <div
-            class="w-[4.25rem] h-[5.375rem] px-[.25rem] pt-[.4375rem] bg-cover bg-center border-[.0625rem] rounded-[.875rem] cursor-pointer"
+            class="w-[4.25rem] h-[5.375rem] px-[.25rem] pt-[.4375rem] bg-cover bg-center bg-no-repeat border-[.0625rem] rounded-[.875rem] cursor-pointer"
             :class="selectedTape === 'popular' ? 'bg-[url(/static/tab-act-bg.png)] border-[#D64258]' : 'bg-[var(--color-tabbar)] border-[#D64258]'"
             @click="selectedTape = 'popular'"
             role="button"
@@ -161,7 +161,7 @@
             </p>
           </div>
           <div v-for="provider in providers" :key="provider.id"
-            class="w-[4.25rem] h-[5.375rem] px-[.25rem] pt-[.4375rem] border-[.0625rem] rounded-[.875rem] hover:opacity-80 transition-opacity duration-200 flex-shrink-0 cursor-pointer"
+            class="w-[4.25rem] h-[5.375rem] px-[.25rem] pt-[.4375rem] bg-cover bg-center bg-no-repeat border-[.0625rem] rounded-[.875rem] hover:opacity-80 transition-opacity duration-200 flex-shrink-0 cursor-pointer"
             :class="selectedTape === provider.id ? 'bg-[url(/static/tab-act-bg.png)] border-[#D64258]' : 'bg-[var(--color-tabbar)] border-[#D64258]'"
             @click="selectedTape = provider.id"
             role="button"

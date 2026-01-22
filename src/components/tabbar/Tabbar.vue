@@ -4,7 +4,7 @@
 
 
     <!-- 正常tabbar容器 -->
-    <div class="h-[3.5rem] flex items-center justify-around !bg-[var(--color-bg-aside)]" style="
+    <div class="h-[3.5rem] flex items-center justify-around !bg-[var(--color-tabbar)]" style="
       -webkit-mask: url('/static/tabbar.svg') no-repeat center / contain;
       mask: url('/static/tabbar.svg') no-repeat center / contain;      
   ">

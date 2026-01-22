@@ -17,7 +17,7 @@
         <span class="text-white/60 text-[.9rem]">Dia {{ r.reward_date }}</span>
         <span class="text-white text-[.9rem]">{{ formatCurrency(r.reward_amount) }}</span>
       </div>
-      <div v-if="invitationRewards.length === 0" class="text-center py-[.75rem] text-white/50">Sem registros</div>
+      <div v-if="invitationRewards.length === 0" class="text-center py-[.75rem] text-[--color-text-link]">Sem registros</div>
     </div>
   </div>
  </template>

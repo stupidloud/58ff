@@ -19,7 +19,7 @@
             <Empty
                 title="Sem Registros"            
                 iconColor="#9CA3AF"
-                textColor="#6B7280"
+                textColor="#c2baba"
             />
         </div>
     </div>
